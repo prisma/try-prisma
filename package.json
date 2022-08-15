@@ -1,0 +1,21 @@
+{
+  "name": "create-prisma-app",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "bin": {
+    "create-prisma-app": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.7.1",
+    "tsup": "^6.2.1",
+    "typescript": "^4.7.4"
+  }
+}
