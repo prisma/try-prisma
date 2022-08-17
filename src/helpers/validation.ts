@@ -2,7 +2,7 @@ import fs from "fs";
 export default {
   directoryName(name: string) {
     const re =
-      /[<>:"\/\\|?*\x00-\x1F]|^(?:aux|con|clock\$|nul|prn|com[1-9]|lpt[1-9])$/i;
+      /[<>:"/\\|?*\x00-\x1F]|^(?:aux|con|clock\$|nul|prn|com[1-9]|lpt[1-9])$/i;
     if (re.test(name)) {
       return "Sorry, that name is invalid.";
     } else {
