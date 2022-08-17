@@ -17,7 +17,7 @@ program
   )
   .option(
     "-i, --install [package-manager]",
-    "Specifies you would like to run `npm install` automatically after creating the project. You can also specify which package manager to use [npm or yarn]"
+    "Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm]"
   )
   .option(
     "-n, --name <project-name>",
