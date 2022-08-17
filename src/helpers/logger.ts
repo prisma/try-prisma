@@ -10,4 +10,7 @@ export default {
   warn: (message) => {
     console.log(chalk.yellowBright(message));
   },
+  success: (message) => {
+    console.log(chalk.greenBright(message));
+  },
 };

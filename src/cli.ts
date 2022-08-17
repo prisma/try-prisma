@@ -1,33 +1,30 @@
 import inquirer from "inquirer";
 import getRepoFolders from "./helpers/getRepoFolders";
-import downloadTarAndExtract from "./helpers/downloadTarbalAndExtract";
+import downloadAndExtractRepoTar from "./helpers/downloadAndExtractRepoTar";
 import validate from "./helpers/validation";
 import ora from "ora";
 import { exec } from "child_process";
 import { promisify } from "util";
 import chalk from "chalk";
+import type { CliInput } from "./types";
+import logger from "./helpers/logger";
 import SearchList from "inquirer-search-list";
 
 inquirer.registerPrompt("search-list", SearchList);
 
 const execa = promisify(exec);
+
 export default class Cli {
   private projects: string[] = [];
-  public answers: {
-    template: string;
-    install: boolean;
-    name: string;
-    dirpath: string;
-    pkgMgr: string;
-  } = {
+  private spinner = ora();
+  private ui = new inquirer.ui.BottomBar();
+  public answers: CliInput = {
     template: "",
     install: false,
     name: "",
     dirpath: "",
     pkgMgr: "",
   };
-
-  constructor() {}
 
   private validateUserInput() {
     if (this.answers.template.length) {
@@ -52,12 +49,7 @@ export default class Cli {
     }
   }
 
-  public async run() {
-    const spinner = ora("Loading example projects").start();
-    this.projects = await getRepoFolders();
-    spinner.stop();
-    this.validateUserInput();
-
+  private async getTemplate() {
     if (!this.answers.template.length) {
       const { template } = await inquirer.prompt({
         // @ts-ignore
@@ -71,11 +63,13 @@ export default class Cli {
       });
       this.answers.template = template;
     }
+  }
 
+  private async getInstallSelection() {
     if (!this.answers.install) {
       const { packages } = await inquirer.prompt({
         type: "confirm",
-        message: "Should we run `npm install` for you?",
+        message: `Should we automatically install packages for you?`,
         name: "packages",
         default: false,
       });
@@ -92,7 +86,9 @@ export default class Cli {
       });
       this.answers.pkgMgr = manager;
     }
+  }
 
+  private async getProjectName() {
     if (!this.answers.name.length) {
       const { dirname } = await inquirer.prompt({
         type: "input",
@@ -106,7 +102,9 @@ export default class Cli {
       });
       this.answers.name = dirname;
     }
+  }
 
+  private async getProjectDirectory() {
     if (!this.answers.dirpath.length) {
       const { dirpath } = await inquirer.prompt({
         type: "input",
@@ -119,53 +117,79 @@ export default class Cli {
       });
       this.answers.dirpath = dirpath;
     }
-
-    await this.performSetup();
   }
 
-  public async performSetup() {
-    const spinner = ora(
+  private async handleRepoProject() {
+    this.spinner.start(
       `Downloading and extracting the ${this.answers.name} project`
-    ).start();
-
-    await downloadTarAndExtract(
+    );
+    await downloadAndExtractRepoTar(
       this.answers.template,
       `${this.answers.dirpath}/${this.answers.name}`
     );
-    spinner.succeed(
+    this.spinner.succeed(
       `Downloaded and extracted the ${this.answers.name} project.`
     );
+  }
 
-    if (this.answers.install) {
-      spinner.start(
-        `Running \`${this.answers.pkgMgr} install\`. This may take a bit...`
+  private async installPackages() {
+    this.spinner.start(
+      `Running ${chalk.greenBright(
+        `\`${this.answers.pkgMgr} install\``
+      )}. This may take a bit...`
+    );
+
+    try {
+      // Run the install command
+      await execa(`${this.answers.pkgMgr.toLowerCase()} install`, {
+        cwd: `${this.answers.dirpath}/${this.answers.name}`,
+      });
+      this.spinner.succeed(`Installed packages.`);
+    } catch (e) {
+      this.spinner.stopAndPersist();
+      throw Error(
+        `There was a problem installing your packages.\n${e.message}${
+          // If this was a "command not found" error, let the user know they can install the pkgMgr and run it manually
+          e.message.indexOf("command not found") > -1
+            ? chalk.cyan(
+                `No worries. Once you install ${chalk.green(
+                  this.answers.pkgMgr
+                )} you can run ${chalk.green(
+                  `${this.answers.pkgMgr} install`
+                )} again.`
+              )
+            : ""
+        }`
       );
-      try {
-        await execa(`${this.answers.pkgMgr.toLowerCase()} install`, {
-          cwd: `${this.answers.dirpath}/${this.answers.name}`,
-        });
-        spinner.succeed(`Installed packages.`);
-      } catch (e) {
-        spinner.stopAndPersist();
-        throw Error(
-          `There was a problem installing your packages.\n${e.message}${
-            e.message.indexOf("command not found") > -1
-              ? chalk.cyan(
-                  `No worries. Once you install ${chalk.green(
-                    this.answers.pkgMgr
-                  )} you can run ${chalk.green(
-                    `${this.answers.pkgMgr} install`
-                  )} again.`
-                )
-              : ""
-          }`
-        );
-      }
     }
-    spinner.succeed(
-      `You're all set! Your project can be found at: ${chalk.bold(
-        `${this.answers.dirpath}/${this.answers.name}`
-      )}`
+  }
+
+  public async run() {
+    // Load the list of available templates
+    this.spinner.text = "Loading example projects";
+    this.spinner.start();
+    this.projects = await getRepoFolders();
+    this.spinner.succeed(`Loaded ${this.projects.length} templates`);
+
+    // Validate user input from command line options
+    this.validateUserInput();
+
+    // Collect user input
+    await this.getTemplate();
+    await this.getInstallSelection();
+    await this.getProjectName();
+    await this.getProjectDirectory();
+
+    // Scaffold the project
+    await this.handleRepoProject();
+
+    // Install the npm packages
+    if (this.answers.install) {
+      await this.installPackages();
+    }
+
+    logger.success(
+      `The project is good to go! Check it out at: \`${this.answers.dirpath}/${this.answers.name}\``
     );
   }
 }
