@@ -17,8 +17,8 @@ async function main() {
       "Which example project would you like to start off with?"
     )
     .option(
-      "-i, --install",
-      "Specifies you would like to run `npm install` automatically after creating the project."
+      "-i, --install [package-manager]",
+      "Specifies you would like to run `npm install` automatically after creating the project. You can also specify which package manager to use [npm or yarn]"
     )
     .option(
       "-n, --name <project-name>",
@@ -41,7 +41,11 @@ async function main() {
     cli.answers.name = name.replace("/", "_").trim();
   }
   if (install) {
+    console.log(install);
     cli.answers.install = true;
+    if (typeof install === "string" && install.trim().length) {
+      cli.answers.pkgMgr = install.trim();
+    }
   }
   if (path) {
     cli.answers.dirpath = path;

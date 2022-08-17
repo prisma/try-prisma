@@ -13,11 +13,13 @@ export default class Cli {
     install: boolean;
     name: string;
     dirpath: string;
+    pkgMgr: string;
   } = {
     template: "",
     install: false,
     name: "",
     dirpath: "",
+    pkgMgr: "",
   };
 
   constructor() {}
@@ -72,6 +74,18 @@ export default class Cli {
         default: false,
       });
       this.answers.install = packages;
+    }
+
+    if (!this.answers.pkgMgr.length && this.answers.install) {
+      const { manager } = await inquirer.prompt({
+        // @ts-ignore
+        type: "list",
+        message: "Which package manager do you prefer?",
+        name: "manager",
+        default: "npm",
+        choices: ["npm", "Yarn"],
+      });
+      this.answers.pkgMgr = manager;
     }
 
     if (!this.answers.name.length) {
