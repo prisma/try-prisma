@@ -7,6 +7,8 @@ import SearchList from "inquirer-search-list";
 inquirer.registerPrompt("search-list", SearchList);
 import { exec } from "child_process";
 import { promisify } from "util";
+import logger from "./helpers/logger";
+import chalk from "chalk";
 
 const execa = promisify(exec);
 export default class Cli {
@@ -82,12 +84,11 @@ export default class Cli {
 
     if (!this.answers.pkgMgr.length && this.answers.install) {
       const { manager } = await inquirer.prompt({
-        // @ts-ignore
         type: "list",
         message: "Which package manager do you prefer?",
         name: "manager",
-        default: "npm",
-        choices: ["npm", "Yarn"],
+        default: process.env.npm_config_user_agent,
+        choices: ["npm", "Yarn", "pnpm"],
       });
       this.answers.pkgMgr = manager;
     }
@@ -111,7 +112,7 @@ export default class Cli {
         type: "input",
         message: "Where should the new folder be created?",
         name: "dirpath",
-        default: "./",
+        default: ".",
         validate(answer) {
           return validate.directory(answer);
         },
@@ -131,15 +132,40 @@ export default class Cli {
       this.answers.template,
       `${this.answers.dirpath}/${this.answers.name}`
     );
-    if (this.answers.install) {
-      spinner.text = `Running \`${this.answers.pkgMgr} install\``;
-      await execa(`${this.answers.pkgMgr.toLowerCase()} install`, {
-        cwd: `${this.answers.dirpath}/${this.answers.name}`,
-      });
-    }
-    spinner.succeed("You're all set!");
+    spinner.succeed(
+      `Downloaded and extracted the ${this.answers.name} project.`
+    );
 
-    console.log(this.answers);
-    // Finish
+    if (this.answers.install) {
+      spinner.start(
+        `Running \`${this.answers.pkgMgr} install\`. This may take a bit...`
+      );
+      try {
+        await execa(`${this.answers.pkgMgr.toLowerCase()} install`, {
+          cwd: `${this.answers.dirpath}/${this.answers.name}`,
+        });
+        spinner.succeed(`Installed packages.`);
+      } catch (e) {
+        spinner.stopAndPersist();
+        throw Error(
+          `There was a problem installing your packages.\n${e.message}${
+            e.message.indexOf("command not found") > -1
+              ? chalk.cyan(
+                  `No worries. Once you install ${chalk.green(
+                    this.answers.pkgMgr
+                  )} you can run ${chalk.green(
+                    `${this.answers.pkgMgr} install`
+                  )} again.`
+                )
+              : ""
+          }`
+        );
+      }
+    }
+    spinner.succeed(
+      `You're all set! Your project can be found at: ${chalk.bold(
+        `${this.answers.dirpath}/${this.answers.name}`
+      )}`
+    );
   }
 }

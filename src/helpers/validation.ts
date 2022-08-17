@@ -10,7 +10,7 @@ export default {
     }
   },
   directory(path: string) {
-    if (path.slice(-1) === "/" && path != "./") {
+    if (path.slice(-1) === "/") {
       return "The path should not end in /";
     }
 
