@@ -12,7 +12,10 @@
     "build": "tsup src/index.ts --format esm --clean --sourcemap --minify --metafile",
     "local": "npm run build && npm i -g && npx create-prisma-app",
     "format": "prettier --write --plugin-search-dir=. \"**/*.{ts,tsx}\"",
-    "format:check": "prettier --check --plugin-search-dir=. \"**/*.{ts,tsx}\""
+    "format:check": "prettier --check --plugin-search-dir=. \"**/*.{ts,tsx}\"",
+    "lint": "eslint **/*.ts",
+    "lint:fix": "eslint **/*.ts --fix",
+    "check": " npm run format:check && npm run lint"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +25,10 @@
     "@types/node": "18.7.1",
     "@types/node-fetch": "2.6.2",
     "@types/tar-fs": "2.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "@typescript-eslint/parser": "^5.33.1",
+    "eslint": "^8.22.0",
+    "husky": "^8.0.1",
     "prettier": "^2.7.1",
     "tsup": "6.2.1",
     "typescript": "4.7.4"
