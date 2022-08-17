@@ -1,11 +1,14 @@
 import inquirer from "inquirer";
 import getRepoFolders from "./helpers/getRepoFolders";
 import downloadTarAndExtract from "./helpers/downloadTarbalAndExtract";
-import SearchList from "inquirer-search-list";
 import validate from "./helpers/validation";
-
+import ora from "ora";
+import SearchList from "inquirer-search-list";
 inquirer.registerPrompt("search-list", SearchList);
+import { exec } from "child_process";
+import { promisify } from "util";
 
+const execa = promisify(exec);
 export default class Cli {
   private projects: string[] = [];
   public answers: {
@@ -48,8 +51,9 @@ export default class Cli {
   }
 
   public async run() {
+    const spinner = ora("Loading example projects").start();
     this.projects = await getRepoFolders();
-
+    spinner.stop();
     this.validateUserInput();
 
     if (!this.answers.template.length) {
@@ -119,14 +123,21 @@ export default class Cli {
   }
 
   public async performSetup() {
+    const spinner = ora(
+      `Downloading and extracting the ${this.answers.name} project`
+    ).start();
+
     await downloadTarAndExtract(
       this.answers.template,
       `${this.answers.dirpath}/${this.answers.name}`
     );
-
     if (this.answers.install) {
-      // Install the packages if needed
+      spinner.text = `Running \`${this.answers.pkgMgr} install\``;
+      await execa(`${this.answers.pkgMgr.toLowerCase()} install`, {
+        cwd: `${this.answers.dirpath}/${this.answers.name}`,
+      });
     }
+    spinner.succeed("You're all set!");
 
     console.log(this.answers);
     // Finish

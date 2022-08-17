@@ -41,7 +41,6 @@ async function main() {
     cli.answers.name = name.replace("/", "_").trim();
   }
   if (install) {
-    console.log(install);
     cli.answers.install = true;
     if (typeof install === "string" && install.trim().length) {
       cli.answers.pkgMgr = install.trim();
