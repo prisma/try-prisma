@@ -22,7 +22,7 @@ export default async function downloadAndExtractTarball(
   }
 
   // Download the repo
-  let response = await fetch(EXAMPLES_REPO_TAR);
+  const response = await fetch(EXAMPLES_REPO_TAR);
 
   if (response.status !== 200) {
     throw new Error(
@@ -37,7 +37,7 @@ export default async function downloadAndExtractTarball(
       // Extract the stuff into this directory
       tar.extract(outputDir, {
         map(header) {
-          let originalDirName = header.name.split("/")[0];
+          const originalDirName = header.name.split("/")[0];
           header.name = header.name.replace(`${originalDirName}/`, "");
           subFolderPath = subFolderPath.split(path.sep).join(path.posix.sep);
           if (subFolderPath) {

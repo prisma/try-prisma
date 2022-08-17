@@ -33,7 +33,7 @@ export default async function () {
     }, {});
 
   // Remove any directory listings where there is no project (signified by the presence of package.json)
-  for (let key in mergedData) {
+  for (const key in mergedData) {
     if (!mergedData[key].includes("package.json")) {
       delete mergedData[key];
     }
