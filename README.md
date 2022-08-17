@@ -2,8 +2,6 @@
 
 `create-prisma-app` is a CLI tool that helps you to easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
 
----
-
 ## Usage
 
 The easiest way to set up a project using `create-prisma-app` is to run the following command:
