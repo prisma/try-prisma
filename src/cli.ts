@@ -3,12 +3,12 @@ import getRepoFolders from "./helpers/getRepoFolders";
 import downloadTarAndExtract from "./helpers/downloadTarbalAndExtract";
 import validate from "./helpers/validation";
 import ora from "ora";
-import SearchList from "inquirer-search-list";
-inquirer.registerPrompt("search-list", SearchList);
 import { exec } from "child_process";
 import { promisify } from "util";
-import logger from "./helpers/logger";
 import chalk from "chalk";
+import SearchList from "inquirer-search-list";
+
+inquirer.registerPrompt("search-list", SearchList);
 
 const execa = promisify(exec);
 export default class Cli {
