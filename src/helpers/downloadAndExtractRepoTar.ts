@@ -12,11 +12,11 @@ const pipeline = promisify(stream.pipeline);
 
 export default async function downloadAndExtractTarball(
   subFolderPath: string,
-  outputDir: string
+  outputDir: string,
 ): Promise<void> {
   if (!subFolderPath) {
     logger.warn(
-      `No project was selected from the prisma/prisma-examples repostory.`
+      `No project was selected from the prisma/prisma-examples repostory.`,
     );
     throw new Error();
   }
@@ -26,7 +26,7 @@ export default async function downloadAndExtractTarball(
 
   if (response.status !== 200) {
     throw new Error(
-      `Something went wrong when fetching prisma/prisma-examples. Recieved a status code ${response.status}.`
+      `Something went wrong when fetching prisma/prisma-examples. Recieved a status code ${response.status}.`,
     );
   }
 
@@ -56,11 +56,11 @@ export default async function downloadAndExtractTarball(
 
           return header.name === "<ignore-me>";
         },
-      })
+      }),
     );
   } catch (_) {
     throw new Error(
-      `Something went wrong when extracting the files from the repostory tar file.`
+      `Something went wrong when extracting the files from the repostory tar file.`,
     );
   }
 }

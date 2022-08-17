@@ -121,22 +121,22 @@ export default class Cli {
 
   private async handleRepoProject() {
     this.spinner.start(
-      `Downloading and extracting the ${this.answers.name} project`
+      `Downloading and extracting the ${this.answers.name} project`,
     );
     await downloadAndExtractRepoTar(
       this.answers.template,
-      `${this.answers.dirpath}/${this.answers.name}`
+      `${this.answers.dirpath}/${this.answers.name}`,
     );
     this.spinner.succeed(
-      `Downloaded and extracted the ${this.answers.name} project.`
+      `Downloaded and extracted the ${this.answers.name} project.`,
     );
   }
 
   private async installPackages() {
     this.spinner.start(
       `Running ${chalk.greenBright(
-        `\`${this.answers.pkgMgr} install\``
-      )}. This may take a bit...`
+        `\`${this.answers.pkgMgr} install\``,
+      )}. This may take a bit...`,
     );
 
     try {
@@ -153,13 +153,13 @@ export default class Cli {
           e.message.indexOf("command not found") > -1
             ? chalk.cyan(
                 `No worries. Once you install ${chalk.green(
-                  this.answers.pkgMgr
+                  this.answers.pkgMgr,
                 )} you can run ${chalk.green(
-                  `${this.answers.pkgMgr} install`
-                )} again.`
+                  `${this.answers.pkgMgr} install`,
+                )} again.`,
               )
             : ""
-        }`
+        }`,
       );
     }
   }
@@ -189,7 +189,7 @@ export default class Cli {
     }
 
     logger.success(
-      `The project is good to go! Check it out at: \`${this.answers.dirpath}/${this.answers.name}\``
+      `The project is good to go! Check it out at: \`${this.answers.dirpath}/${this.answers.name}\``,
     );
   }
 }

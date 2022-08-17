@@ -8,14 +8,14 @@ export default async function () {
 
   if (status !== 200) {
     throw new Error(
-      `Something went wrong when fetching the available projects from prisma/prisma-examples. Got status code ${status}`
+      `Something went wrong when fetching the available projects from prisma/prisma-examples. Got status code ${status}`,
     );
   }
 
   const mergedData = data.tree
     // Remove un-needed folders
     .filter(
-      (item) => !EXAMPLES_DIR_IGNORE.some((dir) => item.path.startsWith(dir))
+      (item) => !EXAMPLES_DIR_IGNORE.some((dir) => item.path.startsWith(dir)),
     )
     // Get an object where each key is a folder path and the value is an array of file names
     .reduce((prev, curr) => {

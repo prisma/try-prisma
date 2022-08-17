@@ -10,7 +10,9 @@
   "scripts": {
     "dev": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.js\"",
     "build": "tsup src/index.ts --format esm --clean --sourcemap --minify --metafile",
-    "local": "npm run build && npm i -g && npx create-prisma-app"
+    "local": "npm run build && npm i -g && npx create-prisma-app",
+    "format": "prettier --write --plugin-search-dir=. \"**/*.{ts,tsx}\"",
+    "format:check": "prettier --check --plugin-search-dir=. \"**/*.{ts,tsx}\"",
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,7 @@
     "@types/node": "^18.7.1",
     "@types/node-fetch": "^2.6.2",
     "@types/tar-fs": "^2.0.1",
+    "prettier": "^2.7.1",
     "tsup": "^6.2.1",
     "typescript": "^4.7.4"
   },
