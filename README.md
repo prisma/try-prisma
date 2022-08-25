@@ -1,13 +1,13 @@
-# create-prisma-app
+# try-prisma
 
-`create-prisma-app` is a CLI tool that helps you to easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
+`try-prisma` is a CLI tool that helps you to easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
 
 ## Usage
 
-The easiest way to set up a project using `create-prisma-app` is to run the following command:
+The easiest way to set up a project using `try-prisma` is to run the following command:
 
 ```sh copy
-npx create-prisma-app
+npx try-prisma
 ```
 
 This will walk you through a couple of interactive options _(detailed below)_ to help you set up the project.
@@ -16,7 +16,7 @@ This will walk you through a couple of interactive options _(detailed below)_ to
 
 ## Arguments
 
-You can _optionally_ provide arguments to the `npx create-prisma-app` command as an alternative to (or in combination with) the interactive experience.
+You can _optionally_ provide arguments to the `npx try-prisma` command as an alternative to (or in combination with) the interactive experience.
 
 The options are as follows:
 
@@ -34,7 +34,7 @@ The options are as follows:
 You would like to use the template named `typescript/grpc`, install packages automatically:
 
 ```sh
-npx create-prisma-app -t typescript/grpc --install
+npx try-prisma -t typescript/grpc --install
 ```
 
 In this scenario, you will still be prompted to input values for your preferred package manager and the name of the resulting folder.
@@ -44,7 +44,7 @@ In this scenario, you will still be prompted to input values for your preferred 
 If you wanted to use [`yarn`](https://yarnpkg.com/) to install the packages automatically:
 
 ```sh
-npx create-prisma-app -i yarn
+npx try-prisma -i yarn
 ```
 
 ### Selecting a directory and folder name
@@ -52,7 +52,7 @@ npx create-prisma-app -i yarn
 Below, you would create a new project at `../../projects/new_folder`:
 
 ```sh
-npx create-prisma-app -p ../../projects -n new_folder
+npx try-prisma -p ../../projects -n new_folder
 ```
 
 ### All of the options!
@@ -60,5 +60,5 @@ npx create-prisma-app -p ../../projects -n new_folder
 Interactive terminal who?? Use all the options!
 
 ```npx
-npx create-prisma-app -t typescript/grpc -i pnpm -n my_project -p ./projects
+npx try-prisma -t typescript/grpc -i pnpm -n my_project -p ./projects
 ```

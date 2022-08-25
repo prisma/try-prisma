@@ -6,7 +6,7 @@ import { CliInput } from "./types";
 
 const program = new Command();
 program
-  .name("create-prisma-app")
+  .name("try-prisma")
   .description(
     "Quickly get up and running with one of Prisma's many starter templates.",
   )

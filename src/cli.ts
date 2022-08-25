@@ -52,7 +52,7 @@ export default class Cli {
   private async getTemplate() {
     if (!this.answers.template.length) {
       const { template } = await inquirer.prompt({
-        // @ts-ignore
+        // @ts-expect-error Inquirer doesn't register the type.
         type: "search-list",
         message: "Which template would you like to use?",
         name: "template",

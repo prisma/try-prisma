@@ -1,32 +1,38 @@
 {
-  "name": "create-prisma-app",
+  "name": "try-prisma",
   "version": "1.0.0",
-  "description": "",
+  "description": "A CLI tool to help get you up and running with any Prisma example project.",
   "type": "module",
   "exports": "./dist/index.js",
   "bin": {
-    "create-prisma-app": "./dist/index.js"
+    "try-prisma": "./dist/index.js"
   },
   "scripts": {
     "dev": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.js\"",
     "build": "tsup src/index.ts --format esm --clean --sourcemap --minify --metafile",
-    "local": "npm run build && npm i -g && npx create-prisma-app",
+    "local": "npm run build && npm i -g && npx try-prisma",
     "format": "prettier --write --plugin-search-dir=. \"**/*.{ts,tsx}\"",
     "format:check": "prettier --check --plugin-search-dir=. \"**/*.{ts,tsx}\"",
     "lint": "eslint **/*.ts",
     "lint:fix": "eslint **/*.ts --fix",
     "check": " npm run format:check && npm run lint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "prisma",
+    "cli",
+    "database",
+    "typescript",
+    "javascript"
+  ],
+  "author": "Sabin Adams",
+  "license": "MIT",
   "devDependencies": {
     "@types/inquirer": "9.0.1",
     "@types/node": "18.7.1",
     "@types/node-fetch": "2.6.2",
     "@types/tar-fs": "2.0.1",
-    "@typescript-eslint/eslint-plugin": "5.34.0",
-    "@typescript-eslint/parser": "5.34.0",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
     "eslint": "8.22.0",
     "husky": "8.0.1",
     "prettier": "2.7.1",
