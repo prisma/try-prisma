@@ -4,13 +4,14 @@ import { promisify } from "util";
 import gunzip from "gunzip-maybe";
 import tar from "tar-fs";
 import fetch from "node-fetch";
-import logger from "./logger";
+import logger from "../utils/logger";
+import ora from "ora";
 
-import { EXAMPLES_REPO_TAR } from "../constants";
+import { EXAMPLES_REPO_TAR } from "../utils/constants";
 
 const pipeline = promisify(stream.pipeline);
 
-export default async function downloadAndExtractTarball(
+export default async function download(
   subFolderPath: string,
   outputDir: string,
 ): Promise<void> {
@@ -21,10 +22,14 @@ export default async function downloadAndExtractTarball(
     throw new Error();
   }
 
+  const spinner = ora();
+  spinner.start(`Downloading and extracting the ${subFolderPath} project`);
+
   // Download the repo
   const response = await fetch(EXAMPLES_REPO_TAR);
 
   if (response.status !== 200) {
+    spinner.stopAndPersist()
     throw new Error(
       `Something went wrong when fetching prisma/prisma-examples. Recieved a status code ${response.status}.`,
     );
@@ -58,7 +63,11 @@ export default async function downloadAndExtractTarball(
         },
       }),
     );
+    spinner.succeed(
+      `Downloaded and extracted the ${subFolderPath} project.`,
+    );
   } catch (_) {
+    spinner.stopAndPersist()
     throw new Error(
       `Something went wrong when extracting the files from the repostory tar file.`,
     );

@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import SearchList from "inquirer-search-list";
-import validate from "./validation";
+import validate from "../utils/validation";
 
 inquirer.registerPrompt("search-list", SearchList);
 
@@ -44,7 +44,6 @@ const getProjectName = async (defaultValue = ""): Promise<string> => {
     type: "input",
     message: "What should the project be named?",
     name: "dirname",
-    // default: this.answers.template?.replace("/", "_") || "",
     default: defaultValue,
     filter: (input) => input.replace("/", "_").trim(),
     validate(answer) {

@@ -1,61 +1,55 @@
 #!/usr/bin/env node
-import { Command } from "commander";
-import Cli from "./cli";
-import logger from "./helpers/logger";
-import { CliInput } from "./types";
-import { version } from "../package.json";
+import InputCollector from "./cli/input-collector";
+import logger from "./utils/logger";
+import CLI from "./cli";
+import download from "./helpers/download";
+import installPackages from "./helpers/installPackages";
 
-const program = new Command();
+const main = async () => {
+  const { template, install, name, dirpath } = CLI();
+  const ic = new InputCollector();
 
-program
-  .name("try-prisma")
-  .description(
-    "Quickly get up and running with one of Prisma's many starter templates.",
-  )
-  .version(version)
-  .option(
-    "-t, --template <template-name>",
-    "Which example project would you like to start off with?",
-  )
-  .option(
-    "-i, --install [package-manager]",
-    "Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm]",
-  )
-  .option(
-    "-n, --name <project-name>",
-    "What should the resulting directory be named?",
-  )
-  .option(
-    "-p, --path <dir-path>",
-    "Where should the resulting directory be created?",
-  )
-  .parse(process.argv);
-
-const { template, install, name, dirpath }: CliInput = program.opts();
-
-const cli = new Cli();
-
-if (template) {
-  cli.answers.template = template;
-}
-
-if (name) {
-  cli.answers.name = name.replace("/", "_").trim();
-}
-
-if (install) {
-  cli.answers.install = true;
-  if (typeof install === "string" && install.trim().length) {
-    cli.answers.pkgMgr = install.trim();
+  // Pre-populate the input collector with CLI input
+  if (template) {
+    ic.answers.template = template;
   }
-}
 
-if (dirpath) {
-  cli.answers.dirpath = dirpath;
-}
+  if (name) {
+    ic.answers.name = name.replace("/", "_").trim();
+  }
 
-try {
-  cli.run();
-} catch (e) {
-  logger.error(e.message || "");
-}
+  if (install) {
+    ic.answers.install = true;
+    if (typeof install === "string" && install.trim().length) {
+      ic.answers.pkgMgr = install.trim();
+    }
+  }
+
+  if (dirpath) {
+    ic.answers.dirpath = dirpath;
+  }
+
+  // Collect any manually entered input and supplement the pre-populated values
+  const input = await ic.collect();
+  // Download template and optionally install packages
+  await download(input.template, `${input.dirpath}/${input.name}`);
+  if (input.install) {
+    await installPackages(input.pkgMgr, `${input.dirpath}/${input.name}`);
+  }
+
+  logger.success(
+    `The project is good to go! Check it out at: \`${input.dirpath}/${input.name}\``,
+  );
+};
+
+main().catch((e) => {
+  if (e instanceof Error) {
+    logger.error(e);
+  } else {
+    logger.error(
+      "Something strange happened... If the problem persists, please create a GitHub issue with the error below 👇🏻",
+    );
+    console.log(e);
+  }
+  process.exit(1);
+});

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { EXAMPLES_REPO_URL, EXAMPLES_DIR_IGNORE } from "../constants";
+import { EXAMPLES_REPO_URL, EXAMPLES_DIR_IGNORE } from "../utils/constants";
 
-export default async function () {
+export default async function getProjects() {
   const { data, status } = await axios.get<{
     tree: { path: string; type: string; url: string }[];
   }>(EXAMPLES_REPO_URL);

@@ -1,4 +1,5 @@
 import fs from "fs";
+
 export default {
   directoryName(name: string) {
     const re = /[<>:"/\\|?*]|^(?:aux|con|clock\$|nul|prn|com[1-9]|lpt[1-9])$/i;
