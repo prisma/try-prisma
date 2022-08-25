@@ -3,14 +3,16 @@ import { Command } from "commander";
 import Cli from "./cli";
 import logger from "./helpers/logger";
 import { CliInput } from "./types";
+import { version } from "../package.json";
 
 const program = new Command();
+
 program
   .name("try-prisma")
   .description(
     "Quickly get up and running with one of Prisma's many starter templates.",
   )
-  .version("0.0.1")
+  .version(version)
   .option(
     "-t, --template <template-name>",
     "Which example project would you like to start off with?",

@@ -1,4 +1,3 @@
-import inquirer from "inquirer";
 import getRepoFolders from "./helpers/getRepoFolders";
 import downloadAndExtractRepoTar from "./helpers/downloadAndExtractRepoTar";
 import validate from "./helpers/validation";
@@ -8,16 +7,13 @@ import { promisify } from "util";
 import chalk from "chalk";
 import type { CliInput } from "./types";
 import logger from "./helpers/logger";
-import SearchList from "inquirer-search-list";
-
-inquirer.registerPrompt("search-list", SearchList);
+import ic from "./helpers/input-collector";
 
 const execa = promisify(exec);
 
 export default class Cli {
-  private projects: string[] = [];
-  private spinner = ora();
-  private ui = new inquirer.ui.BottomBar();
+  projects: string[] = [];
+  spinner = ora();
   public answers: CliInput = {
     template: "",
     install: false,
@@ -26,7 +22,7 @@ export default class Cli {
     pkgMgr: "",
   };
 
-  private validateUserInput() {
+  validateUserInput() {
     if (this.answers.template.length) {
       const valid = validate.project(this.projects, this.answers.template);
       if (typeof valid === "string") {
@@ -49,77 +45,7 @@ export default class Cli {
     }
   }
 
-  private async getTemplate() {
-    if (!this.answers.template.length) {
-      const { template } = await inquirer.prompt({
-        // @ts-expect-error Inquirer doesn't register the type.
-        type: "search-list",
-        message: "Which template would you like to use?",
-        name: "template",
-        choices: this.projects,
-        validate: (answer) => {
-          return validate.project(this.projects, answer);
-        },
-      });
-      this.answers.template = template;
-    }
-  }
-
-  private async getInstallSelection() {
-    if (!this.answers.install) {
-      const { packages } = await inquirer.prompt({
-        type: "confirm",
-        message: `Should we automatically install packages for you?`,
-        name: "packages",
-        default: false,
-      });
-      this.answers.install = packages;
-    }
-
-    if (!this.answers.pkgMgr.length && this.answers.install) {
-      const { manager } = await inquirer.prompt({
-        type: "list",
-        message: "Which package manager do you prefer?",
-        name: "manager",
-        default: process.env.npm_config_user_agent,
-        choices: ["npm", "Yarn", "pnpm"],
-      });
-      this.answers.pkgMgr = manager;
-    }
-  }
-
-  private async getProjectName() {
-    if (!this.answers.name.length) {
-      const { dirname } = await inquirer.prompt({
-        type: "input",
-        message: "What should the project be named?",
-        name: "dirname",
-        default: this.answers.template?.replace("/", "_") || "",
-        filter: (input) => input.replace("/", "_").trim(),
-        validate(answer) {
-          return validate.directoryName(answer);
-        },
-      });
-      this.answers.name = dirname;
-    }
-  }
-
-  private async getProjectDirectory() {
-    if (!this.answers.dirpath.length) {
-      const { dirpath } = await inquirer.prompt({
-        type: "input",
-        message: "Where should the new folder be created?",
-        name: "dirpath",
-        default: ".",
-        validate(answer) {
-          return validate.directory(answer);
-        },
-      });
-      this.answers.dirpath = dirpath;
-    }
-  }
-
-  private async handleRepoProject() {
+  async handleRepoProject() {
     this.spinner.start(
       `Downloading and extracting the ${this.answers.name} project`,
     );
@@ -132,7 +58,7 @@ export default class Cli {
     );
   }
 
-  private async installPackages() {
+  async installPackages() {
     this.spinner.start(
       `Running ${chalk.greenBright(
         `\`${this.answers.pkgMgr} install\``,
@@ -175,10 +101,23 @@ export default class Cli {
     this.validateUserInput();
 
     // Collect user input
-    await this.getTemplate();
-    await this.getInstallSelection();
-    await this.getProjectName();
-    await this.getProjectDirectory();
+    if (!this.answers.template.length) {
+      this.answers.template = await ic.getTemplate(this.projects);
+    }
+    if (!this.answers.install) {
+      this.answers.install = await ic.getInstallSelection();
+    }
+    if (!this.answers.pkgMgr.length) {
+      this.answers.pkgMgr = await ic.selectManager();
+    }
+    if (!this.answers.name.length) {
+      this.answers.name = await ic.getProjectName(
+        this.answers.template?.replace("/", "_"),
+      );
+    }
+    if (!this.answers.dirpath.length) {
+      this.answers.dirpath = await ic.getProjectDirectory();
+    }
 
     // Scaffold the project
     await this.handleRepoProject();
