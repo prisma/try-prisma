@@ -12,7 +12,7 @@ npx try-prisma
 
 This will walk you through a couple of interactive options _(detailed below)_ to help you set up the project.
 
-![GIF of the interactive terminal](https://res.cloudinary.com/sabinthedev/image/upload/v1660715698/CleanShot_2022-08-16_at_22.54.20_xgzr3p.gif)
+<img width="1234" alt="Interactive Terminal Output" src="https://user-images.githubusercontent.com/18456526/186788667-883b2d51-c700-46ca-bedf-93290713a18b.png">
 
 ## Arguments
 
