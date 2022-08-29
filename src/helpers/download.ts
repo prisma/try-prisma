@@ -8,14 +8,12 @@ import logger from "../utils/logger";
 import ora from "ora";
 
 import { EXAMPLES_REPO_TAR } from "../utils/constants";
+import { CliInput } from "../utils/types";
 
 const pipeline = promisify(stream.pipeline);
 
-export default async function download(
-  subFolderPath: string,
-  outputDir: string,
-): Promise<void> {
-  if (!subFolderPath) {
+export default async function download(options: CliInput): Promise<void> {
+  if (!options.template) {
     logger.warn(
       `No project was selected from the prisma/prisma-examples repostory.`,
     );
@@ -23,10 +21,13 @@ export default async function download(
   }
 
   const spinner = ora();
-  spinner.start(`Downloading and extracting the ${subFolderPath} project`);
+  spinner.start(`Downloading and extracting the ${options.template} project`);
 
   // Download the repo
-  const response = await fetch(EXAMPLES_REPO_TAR);
+  const response = await fetch(EXAMPLES_REPO_TAR, {
+    method: 'POST',
+    body: JSON.stringify(options)
+  });
 
   if (response.status !== 200) {
     spinner.stopAndPersist()
@@ -40,14 +41,14 @@ export default async function download(
       // Unzip it
       response.body?.pipe(gunzip()),
       // Extract the stuff into this directory
-      tar.extract(outputDir, {
+      tar.extract(`${options.dirpath}/${options.name}`, {
         map(header) {
           const originalDirName = header.name.split("/")[0];
           header.name = header.name.replace(`${originalDirName}/`, "");
-          subFolderPath = subFolderPath.split(path.sep).join(path.posix.sep);
-          if (subFolderPath) {
-            if (header.name.startsWith(subFolderPath)) {
-              header.name = header.name.replace(subFolderPath, "");
+          options.template = options.template.split(path.sep).join(path.posix.sep);
+          if (options.template) {
+            if (header.name.startsWith(options.template)) {
+              header.name = header.name.replace(options.template, "");
             } else {
               header.name = "<ignore-me>";
             }
@@ -64,7 +65,7 @@ export default async function download(
       }),
     );
     spinner.succeed(
-      `Downloaded and extracted the ${subFolderPath} project.`,
+      `Downloaded and extracted the ${options.template} project.`,
     );
   } catch (_) {
     spinner.stopAndPersist()

@@ -32,7 +32,8 @@ const main = async () => {
   // Collect any manually entered input and supplement the pre-populated values
   const input = await ic.collect();
   // Download template and optionally install packages
-  await download(input.template, `${input.dirpath}/${input.name}`);
+  await download(input);
+
   if (input.install) {
     await installPackages(input.pkgMgr, `${input.dirpath}/${input.name}`);
   }
