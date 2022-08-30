@@ -52,5 +52,9 @@ main().catch((e) => {
     );
     console.log(e);
   }
-  process.exit(1);
+  if (!process.env.VITEST) {
+    process.exit(1);
+  }
 });
+
+export default main // Exported for testing purposes
