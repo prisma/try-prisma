@@ -9,7 +9,7 @@ const getTemplate = async (projects: string[]): Promise<string> => {
   const { template } = await inquirer.prompt({
     // @ts-expect-error Inquirer doesn't register the type.
     type: "search-list",
-    message: `Which template would you like to use? \n\xa0\xa0${chalk.hex('#4C51BF')("Don't see what you're looking for? Request a new template here:\n\xa0\xa0➡")} ${chalk.bgHex("#25E8D3").hex("#4C51BF")('http://pris.ly/prisma-examples-suggestion')}\n`,
+    message: `Which template would you like to use? \n\xa0\xa0${chalk.hex('#4C51BF')("Don't see what you're looking for? Request a new template here:\n\xa0\xa0➡")} ${chalk.bgHex("#25E8D3").hex("#4C51BF")('https://pris.ly/prisma-examples-suggestion')}\n`,
     name: "template",
     choices: projects,
     validate: (answer) => {
