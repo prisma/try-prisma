@@ -2,6 +2,8 @@
 
 `try-prisma` is a CLI tool that helps you to easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
 
+> Do you have feedback about a specific example template? Submit it [here](https://pris.ly/prisma-examples-feedback)!
+
 ## Usage
 
 The easiest way to set up a project using `try-prisma` is to run the following command:
