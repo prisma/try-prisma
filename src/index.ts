@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import chalk from 'chalk'
 import InputCollector from "./cli/input-collector";
 import logger from "./utils/logger";
 import CLI from "./cli";
@@ -39,8 +40,11 @@ const main = async () => {
   }
 
   logger.success(
-    `The project is good to go! Check it out at: \`${input.dirpath}/${input.name}\``,
+    `\nThe project is good to go! Check it out at: ${chalk.gray(`${input.dirpath}/${input.name}\n`)}`,
   );
+  logger.success(
+    `If you have any feedback about this specific template, we want to hear it!\nSubmit any feedback here: ${chalk.gray('https://pris.ly/prisma-examples-feedback')}`
+  )
 };
 
 main().catch((e) => {
