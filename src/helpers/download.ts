@@ -62,6 +62,8 @@ export default async function download(options: CliInput): Promise<void> {
 
           return header.name === "<ignore-me>";
         },
+        readable: true,
+        writable: true,
       }),
     );
     spinner.succeed(
