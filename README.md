@@ -14,7 +14,9 @@ npx try-prisma
 
 This will walk you through a couple of interactive options _(detailed below)_ to help you set up the project.
 
-<img width="1234" alt="Interactive Terminal Output" src="https://user-images.githubusercontent.com/18456526/186788667-883b2d51-c700-46ca-bedf-93290713a18b.png">
+<div align="center">
+<img width="500" alt="CleanShot 2022-08-31 at 13 05 29@2x" src="https://user-images.githubusercontent.com/18456526/187772042-f7b8a419-2038-48f1-b625-b88c471a8764.png">
+</div>
 
 ## Arguments
 
