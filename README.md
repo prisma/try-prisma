@@ -1,6 +1,11 @@
-# try-prisma
+<center>
+<h2>try-prisma</h2>
+<hr/>
+</center>
 
-`try-prisma` is a CLI tool that helps you to easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
+`try-prisma` is a CLI tool that helps you easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
+
+These projects are meant to be playgrounds for you to test integrations and features, _not production-ready boilerplates or templates_.
 
 > Do you have feedback about a specific example template? Submit it [here](https://pris.ly/prisma-examples-feedback)!
 
@@ -12,7 +17,7 @@ The easiest way to set up a project using `try-prisma` is to run the following c
 npx try-prisma
 ```
 
-This will walk you through a couple of interactive options _(detailed below)_ to help you set up the project.
+This will walk you through a set of interactive options _(detailed below)_ to help you set up your project.
 
 <div align="center">
 <img width="500" alt="CleanShot 2022-08-31 at 13 05 29@2x" src="https://user-images.githubusercontent.com/18456526/187772042-f7b8a419-2038-48f1-b625-b88c471a8764.png">
@@ -24,12 +29,12 @@ You can _optionally_ provide arguments to the `npx try-prisma` command as an alt
 
 The options are as follows:
 
-|   Option   | Alias |      Arguments      | Description                                                                                                                                                       |
-| :--------: | :---: | :-----------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| --template |  -t   |                     | Specifies which example project would you like to start off with.                                                                                                 |
-| --install  |  -i   | String _(optional)_ | Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm] |
-|   --name   |  -n   |                     | Name of resulting directory.                                                                                                                                      |
-|   --path   |  -p   |                     | Path to the directory where the new folder should be created.                                                                                                     |
+|    Option    | Alias |      Arguments      | Description                                                                                                                                                       |
+| :----------: | :---: | :-----------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--install`  |  -i   | String _(optional)_ | Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm] |
+|   `--name`   |  -n   |                     | Name of resulting directory.                                                                                                                                      |
+|   `--path`   |  -p   |                     | Path to the directory where the new folder should be created.                                                                                                     |
+| `--template` |  -t   |                     | Specifies which example project would you like to start off with.                                                                                                 |
 
 ## Examples
 
