@@ -1,7 +1,1 @@
-{
-  "editor.tabSize": 2,
-  "[markdown]": {
-    "editor.wordWrapColumn": 500
-  },
-  "editor.wordWrap": "wordWrapColumn"
-}
+{}
