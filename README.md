@@ -1,5 +1,12 @@
 
-<h1 align="center">try-prisma</h1>
+<div align=center>  
+  
+  <h1>try-prisma</h1>
+  
+  [![Tests](https://github.com/sabinadams/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/sabinadams/try-prisma/actions/workflows/test.yml)
+  [![Linting](https://github.com/sabinadams/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/sabinadams/try-prisma/actions/workflows/lint.yml)
+  
+</div>
 
 `try-prisma` is a CLI tool that helps you easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
 
