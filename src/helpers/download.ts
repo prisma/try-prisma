@@ -13,7 +13,7 @@ import { CliInput } from "../utils/types";
 const pipeline = promisify(stream.pipeline);
 
 export default async function download(options: CliInput): Promise<void> {
-  if (!options.template) {
+  if (!options.template.length) {
     logger.warn(
       `No project was selected from the prisma/prisma-examples repostory.`,
     );
@@ -36,6 +36,7 @@ export default async function download(options: CliInput): Promise<void> {
     );
   }
 
+  console.log(pipeline)
   try {
     await pipeline(
       // Unzip it
@@ -69,8 +70,9 @@ export default async function download(options: CliInput): Promise<void> {
     spinner.succeed(
       `Downloaded and extracted the ${options.template} project.`,
     );
-  } catch (_) {
+  } catch (e) {
     spinner.stopAndPersist()
+    console.log(e)
     throw new Error(
       `Something went wrong when extracting the files from the repostory tar file.`,
     );

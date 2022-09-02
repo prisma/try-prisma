@@ -6,7 +6,7 @@ import prompts from "./prompts";
 
 export default class InteractiveCli {
   projects: string[] = [];
-  public answers: CliInput = {
+  answers: CliInput = {
     template: "",
     install: false,
     name: "",
@@ -37,7 +37,7 @@ export default class InteractiveCli {
     }
   }
 
-  public async collect() {
+  async collect() {
     // Load the list of available templates
     const spinner = ora();
     spinner.text = "Loading example projects";
