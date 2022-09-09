@@ -36,7 +36,7 @@
     "@types/tar-fs": "2.0.1",
     "@typescript-eslint/eslint-plugin": "5.36.2",
     "@typescript-eslint/parser": "5.36.2",
-    "@vitest/ui": "0.22.1",
+    "@vitest/ui": "0.23.1",
     "eslint": "8.23.0",
     "husky": "8.0.1",
     "prettier": "2.7.1",
