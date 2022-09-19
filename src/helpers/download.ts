@@ -36,7 +36,6 @@ export default async function download(options: CliInput): Promise<void> {
     );
   }
 
-  console.log(pipeline)
   try {
     await pipeline(
       // Unzip it
@@ -48,7 +47,7 @@ export default async function download(options: CliInput): Promise<void> {
           header.name = header.name.replace(`${originalDirName}/`, "");
           options.template = options.template.split(path.sep).join(path.posix.sep);
           if (options.template) {
-            if (header.name.startsWith(options.template)) {
+            if (header.name.startsWith(`${options.template}/`)) {
               header.name = header.name.replace(options.template, "");
             } else {
               header.name = "<ignore-me>";
