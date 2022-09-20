@@ -1,10 +1,10 @@
-import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import InputCollector from '../../src/cli/input-collector'
 import * as getProjects from '../../src/helpers/getProjects'
 import * as validation from '../../src/utils/validation'
 
 vi.mock('../../src/helpers/getProjects', () => ({
- default: () => []
+  default: () => []
 }))
 
 vi.mock('../../src/cli/prompts', () => ({
@@ -13,7 +13,8 @@ vi.mock('../../src/cli/prompts', () => ({
     getInstallSelection: async () => true,
     selectManager: async () => 'npm',
     getProjectName: async () => 'projectName',
-    getProjectDirectory: async () => 'lskdjf'
+    getProjectDirectory: async () => 'lskdjf',
+    getRootDir: async () => 'javascript'
   }
 }))
 
@@ -24,7 +25,7 @@ describe('Input Collector', () => {
   })
   describe('collect()', () => {
     beforeEach(() => {
-      vi.spyOn(MockInputCollector, 'validateUserInput') .mockImplementationOnce(() => true)
+      vi.spyOn(MockInputCollector, 'validateUserInput').mockImplementationOnce(() => true)
       vi.spyOn(getProjects, 'default').mockImplementationOnce(async () => [])
     })
     afterEach(() => {
@@ -45,7 +46,8 @@ describe('Input Collector', () => {
         install: true,
         pkgMgr: 'npm',
         name: 'projectName',
-        dirpath: 'lskdjf'
+        dirpath: 'lskdjf',
+        folder: 'javascript'
       })
     })
   })
@@ -53,11 +55,13 @@ describe('Input Collector', () => {
   describe('validateUserInput()', () => {
     beforeEach(() => {
       vi.spyOn(getProjects, 'default').mockImplementationOnce(async () => [])
-      vi.mock('../../src/utils/validation', () => ({ default: {
-        project: () => true,
-        directoryName: () => true,
-        directory: () => true
-      }}))
+      vi.mock('../../src/utils/validation', () => ({
+        default: {
+          project: () => true,
+          directoryName: () => true,
+          directory: () => true
+        }
+      }))
     })
     afterEach(() => {
       vi.resetAllMocks()
