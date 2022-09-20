@@ -25,7 +25,7 @@ npx try-prisma
 This will walk you through a set of interactive options _(detailed below)_ to help you set up your project.
 
 <div align="center">
-<img width="500" alt="CleanShot 2022-08-31 at 13 05 29@2x" src="https://user-images.githubusercontent.com/18456526/187772042-f7b8a419-2038-48f1-b625-b88c471a8764.png">
+<img width="500" alt="CleanShot 2022-08-31 at 13 05 29@2x" src="https://user-images.githubusercontent.com/18456526/191327448-2eedad2a-3505-47fc-ab42-d171fab7bddf.png">
 </div>
 
 ## Arguments
@@ -39,7 +39,7 @@ The options are as follows:
 | `--install`  |  -i   | String _(optional)_ | Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm] |
 |   `--name`   |  -n   |                     | Name of resulting directory.                                                                                                                                      |
 |   `--path`   |  -p   |                     | Path to the directory where the new folder should be created.                                                                                                     |
-| `--template` |  -t   |                     | Specifies which example project would you like to start off with.                                                                                                 |
+| `--template` |  -t   |                     | Specifies which example project would you like to start off with. This should start with `typescript/` or `javascript/`.                                                                                              |
 
 ## Examples
 
