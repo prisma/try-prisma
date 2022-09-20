@@ -8,6 +8,7 @@ export default class InteractiveCli {
   projects: string[] = [];
   answers: CliInput = {
     template: "",
+    folder: "",
     install: false,
     name: "",
     dirpath: "",
@@ -15,6 +16,12 @@ export default class InteractiveCli {
   };
 
   validateUserInput() {
+    if (this.answers.folder.length) {
+      const valid = validate.rootDir(this.answers.folder)
+      if (typeof valid === "string") {
+        throw Error(valid);
+      }
+    }
     if (this.answers.template.length) {
       const valid = validate.project(this.projects, this.answers.template);
       if (typeof valid === "string") {
@@ -49,6 +56,12 @@ export default class InteractiveCli {
     this.validateUserInput();
 
     // Collect user input
+    if (!this.answers.folder.length) {
+      this.answers.folder = await prompts.getRootDir();
+      this.projects = this.projects.filter(project =>
+        project.startsWith(this.answers.folder)
+      )
+    }
     if (!this.answers.template.length) {
       this.answers.template = await prompts.getTemplate(this.projects);
     }

@@ -3,4 +3,4 @@ export const EXAMPLES_REPO_URL =
 
 export const EXAMPLES_REPO_TAR = 'https://create-prisma-interceptor-alpha.vercel.app/api/interceptor';
 
-export const EXAMPLES_DIR_IGNORE = ["."];
+export const EXAMPLES_DIR_ACCEPT = ['javascript', 'typescript'];

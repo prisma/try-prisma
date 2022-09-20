@@ -1,4 +1,5 @@
 import fs from "fs";
+import { EXAMPLES_DIR_ACCEPT } from "./constants";
 
 export default {
   directoryName(name: string) {
@@ -8,6 +9,9 @@ export default {
     } else {
       return true;
     }
+  },
+  rootDir(path: string) {
+    return EXAMPLES_DIR_ACCEPT.includes(path) || 'Invalid template. Please choose a template from the `javascript` or `typescript` directories in the prisma/prisma-examples repository.'
   },
   directory(path: string) {
     if (path.slice(-1) === "/") {

@@ -13,6 +13,7 @@ const main = async () => {
   // Pre-populate the input collector with CLI input
   if (template) {
     ic.answers.template = template;
+    ic.answers.folder = template.split('/')[0]
   }
 
   if (name) {

@@ -1,10 +1,10 @@
 import fetch from "node-fetch";
-import { EXAMPLES_REPO_URL, EXAMPLES_DIR_IGNORE } from "../utils/constants";
+import { EXAMPLES_REPO_URL, EXAMPLES_DIR_ACCEPT } from "../utils/constants";
 
 export default async function getProjects() {
   const result = await fetch(EXAMPLES_REPO_URL)
-  const data = await result.json() as { tree: { path: string; type: string; url: string }[]};
-  
+  const data = await result.json() as { tree: { path: string; type: string; url: string }[] };
+
   if (result.status !== 200) {
     throw new Error(
       `Something went wrong when fetching the available projects from prisma/prisma-examples. Got status code ${status}`,
@@ -14,7 +14,7 @@ export default async function getProjects() {
   const mergedData = data.tree
     // Remove un-needed folders
     .filter(
-      (item) => !EXAMPLES_DIR_IGNORE.some((dir) => item.path.startsWith(dir)),
+      (item) => EXAMPLES_DIR_ACCEPT.some((dir) => item.path.startsWith(dir)),
     )
     // Get an object where each key is a folder path and the value is an array of file names
     .reduce((prev, curr) => {

@@ -13,7 +13,7 @@ export default () => {
     .version(version)
     .option(
       "-t, --template <template-name>",
-      "Which example project would you like to start off with?",
+      "Which example project would you like to start off with? The available options are folders within the `javascript` and `typescript` directories.",
     )
     .option(
       "-i, --install [package-manager]",
@@ -22,6 +22,10 @@ export default () => {
     .option(
       "-n, --name <project-name>",
       "What should the resulting directory be named?",
+    )
+    .option(
+      "-p, --path <dir-path>",
+      "Where should the resulting directory be created?",
     )
     .option(
       "-p, --path <dir-path>",
