@@ -34,12 +34,12 @@ You can _optionally_ provide arguments to the `npx try-prisma` command as an alt
 
 The options are as follows:
 
-|    Option    | Alias |      Arguments       |                  Default                  | Description                                                                                                                                                       |
-| :----------: | :---: | :------------------: | :---------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--install`  |  -i   | Boolean _(optional)_ |                  `false`                  | Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm] |
-|   `--name`   |  -n   |                      | The name of the selected example project. | Name of resulting directory.                                                                                                                                      |
-|   `--path`   |  -p   |                      |                    `.`                    | Path to the directory where the new folder should be created.                                                                                                     |
-| `--template` |  -t   |                      |                    n/a                    | Specifies which example project would you like to start off with.                                                                                                 |
+|    Option    | Alias |      Arguments       |        Default        | Description                                                                                                                                                       |
+| :----------: | :---: | :------------------: | :-------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--install`  |  -i   | Boolean _(optional)_ |        `false`        | Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm] |
+|   `--name`   |  -n   |                      | Selected project name | Name of resulting directory.                                                                                                                                      |
+|   `--path`   |  -p   |                      |          `.`          | Path to the directory where the new folder should be created.                                                                                                     |
+| `--template` |  -t   |                      |          n/a          | Specifies which example project would you like to start off with.                                                                                                 |
 
 ## Examples
 
