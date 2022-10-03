@@ -1,1 +1,6 @@
-{}
+{
+  "editor.wordWrapColumn": 200000,
+  "[markdown]": {
+    "editor.wordWrapColumn": 200000
+  }
+}
