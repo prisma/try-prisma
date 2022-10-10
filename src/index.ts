@@ -41,8 +41,22 @@ const main = async () => {
   }
 
   logger.success(
-    `\nThe project is good to go! Check it out at: ${chalk.gray(`${input.dirpath}/${input.name}\n`)}`,
+    `\nThe project is good to go! Next steps:`,
   );
+
+  logger.success(`
+
+1. Navigate into the project directory:
+  cd ${chalk.gray(`${input.dirpath}/${input.name}`)}
+
+2. Install dependencies:
+  npm install
+
+3. Create and execute initial migration based on \`schema.prisma\`:
+  npx prisma migrate dev
+
+For more information about this project, visit: https://github.com/prisma/prisma-examples/tree/latest/typescript/script
+  `)
   logger.success(
     `If you have any feedback about this specific template, we want to hear it!\nSubmit any feedback here: ${chalk.gray('https://pris.ly/prisma-examples-feedback')}`
   )
