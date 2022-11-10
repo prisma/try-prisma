@@ -56,7 +56,7 @@ const selectManager = async (): Promise<string> => {
     message: "Which package manager do you prefer?",
     name: "manager",
     default: process.env.npm_config_user_agent,
-    choices: ["npm", "Yarn", "pnpm"],
+    choices: ["npm", "yarn", "pnpm"],
   });
   return manager;
 };
