@@ -6,7 +6,7 @@ import logger from '../utils/logger'
 
 inquirer.registerPrompt("search-list", SearchList);
 const getTemplate = async (projects: string[]): Promise<string> => {
-  logger.success(`\nDon't see what you're looking for? Request a new template here:\n\xa0\xa0➡ ${chalk.gray('https://pris.ly/prisma-examples-suggestion')}\n`)
+  logger.success(`\nDon't see what you're looking for? Request a new template here:\n\xa0\xa0➡ ${chalk.underline.gray('https://pris.ly/prisma-examples-suggestion')}\n`)
   const { template } = await inquirer.prompt({
     // @ts-expect-error Inquirer doesn't register the type.
     type: "search-list",
