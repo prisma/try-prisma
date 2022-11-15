@@ -1,11 +1,10 @@
 
 <div align=center>  
+
+  ![readme-try-prisma](https://user-images.githubusercontent.com/18456526/202004157-e7c97399-1669-4d80-899c-537e09758214.png)
   
-  <h1>try-prisma</h1>
-  
-  [![Tests](https://github.com/sabinadams/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/sabinadams/try-prisma/actions/workflows/test.yml)
-  [![Linting](https://github.com/sabinadams/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/sabinadams/try-prisma/actions/workflows/lint.yml)
-  
+  [![Tests](https://github.com/sabinadams/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/test.yml)
+  [![Linting](https://github.com/sabinadams/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/lint.yml)
 </div>
 
 `try-prisma` is a CLI tool that helps you easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
@@ -25,7 +24,7 @@ npx try-prisma
 This will walk you through a set of interactive options _(detailed below)_ to help you set up your project.
 
 <div align="center">
-<img width="500" alt="CleanShot 2022-08-31 at 13 05 29@2x" src="https://user-images.githubusercontent.com/18456526/191327448-2eedad2a-3505-47fc-ab42-d171fab7bddf.png">
+<img width="500" alt="CleanShot 2022-08-31 at 13 05 29@2x" src="https://user-images.githubusercontent.com/18456526/202004719-6ceaf535-9a56-42d7-821a-525de0517efe.png">
 </div>
 
 ## Arguments
