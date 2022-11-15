@@ -11,6 +11,6 @@ export default {
     console.log(chalk.yellowBright(message));
   },
   success: (message) => {
-    console.log(chalk.hex('#4C51BF')(message));
+    console.log(message);
   },
 };
