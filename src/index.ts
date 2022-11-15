@@ -40,11 +40,8 @@ const main = async () => {
     await installPackages(input.pkgMgr, `${input.dirpath}/${input.name}`);
   }
 
-  logger.success(
-    chalk.bold(`\nThe project is good to go! Next steps:`),
-  );
-
   logger.success(`
+${chalk.bold(`The project is good to go! Next steps:`)}
 
 ${chalk.bold('1. Navigate into the project directory:')}
    ${chalk.hex('#4C51BF')(`cd ${input.dirpath}/${input.name}`)}
@@ -55,7 +52,8 @@ ${chalk.bold('2. Install dependencies:')}
 ${chalk.bold('3. Create and execute initial migration based on `schema.prisma`:')}
    ${chalk.hex('#4C51BF')(`npx prisma migrate dev`)}
 
-For more information about this project, visit: ${chalk.gray.underline(`https://github.com/prisma/prisma-examples/tree/latest/${input.template}`)}
+For more information about this project, visit:
+${chalk.gray.underline(`https://github.com/prisma/prisma-examples/tree/latest/${input.template}`)}
   `)
   logger.success(
     `If you have any feedback about this specific template, we want to hear it!\nSubmit any feedback here: ${chalk.gray.underline('https://pris.ly/prisma-examples-feedback')}`
