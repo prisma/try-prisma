@@ -1,5 +1,9 @@
-on: push
-name: 'Publish'
+on:
+  push:
+    branches:
+      - "main"
+
+name: "Publish"
 jobs:
   publish:
     runs-on: ubuntu-latest
