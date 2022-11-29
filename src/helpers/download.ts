@@ -50,7 +50,7 @@ export default async function download(options: CliInput): Promise<void> {
             if (header.name.startsWith(`${options.template}/`)) {
               header.name = header.name.replace(options.template, "");
             } else {
-              header.name = "<ignore-me>";
+              header.name = "[[ignore-me]]";
             }
           }
           return header;
@@ -60,7 +60,7 @@ export default async function download(options: CliInput): Promise<void> {
             throw new Error(`Header is undefined`);
           }
 
-          return header.name === "<ignore-me>";
+          return header.name === "[[ignore-me]]";
         },
         readable: true,
         writable: true,
