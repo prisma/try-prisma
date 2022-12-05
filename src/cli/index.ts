@@ -33,5 +33,5 @@ export default () => {
     )
     .parse(process.argv);
 
-  return program.opts<CliInput>();
+  return program.opts<Omit<CliInput & { path: string }, 'dirpath'>>();
 };

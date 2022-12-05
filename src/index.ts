@@ -7,7 +7,7 @@ import download from "./helpers/download";
 import installPackages from "./helpers/installPackages";
 
 const main = async () => {
-  const { template, install, name, dirpath } = CLI();
+  const { template, install, name, path: dirpath } = CLI();
   const ic = new InputCollector();
   const instructions: string[] = []
 
