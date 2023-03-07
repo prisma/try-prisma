@@ -23,6 +23,7 @@ export default (): Omit<CliInput, "folder" | "pkgMgr"> => {
       .boolean()
       .default(false)
       .describe("Should this invocation be recorded with Prisma's analytics?"),
+    "v vscode": z.boolean().default(false).describe("Are you using VSCode?"),
   }).parse();
 
   return {
@@ -31,5 +32,6 @@ export default (): Omit<CliInput, "folder" | "pkgMgr"> => {
     install: args.install,
     name: args.name,
     anonymous: args.anonymous,
+    vscode: args.vscode,
   };
 };

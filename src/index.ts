@@ -5,9 +5,10 @@ import logger from "./utils/logger";
 import CLI from "./cli";
 import download from "./helpers/download";
 import installPackages from "./helpers/installPackages";
+import vscodeExtensionSuggestion from "./helpers/vscodeExtensionSuggestion";
 
 const main = async () => {
-  const { template, install, name, dirpath, anonymous } = CLI();
+  const { template, install, name, dirpath, anonymous, vscode } = CLI();
   const ic = new InputCollector();
   const instructions: string[] = [];
 
@@ -50,6 +51,10 @@ const main = async () => {
 
   if (input.install) {
     await installPackages(input.pkgMgr, `${input.dirpath}/${input.name}`);
+  }
+
+  if (vscode) {
+    await vscodeExtensionSuggestion(input);
   }
 
   addInstruction(

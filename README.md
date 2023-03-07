@@ -39,6 +39,7 @@ The options are as follows:
 |   `--name`   |  -n   |                      | Selected project name | Name of resulting directory.                                                                                                                                      |
 |   `--path`   |  -p   |                      |          `.`          | Path to the directory where the new folder should be created.                                                                                                     |
 | `--template` |  -t   |                      |          n/a          | Specifies which example project would you like to start off with.                                                                                                 |
+| `--vscode` |  -v   | Boolean _(optional)_ |         `false`          | Adds a `.vscode` folder with a `extensions.json` file suggesting the Prisma plugin.                                                                                                 |
 
 ## Examples
 
