@@ -25,12 +25,12 @@ export default async function download(options: CliInput): Promise<void> {
 
   // Download the repo
   const response = await fetch(EXAMPLES_REPO_TAR, {
-    method: 'POST',
-    body: JSON.stringify(options)
+    method: "POST",
+    body: JSON.stringify(options),
   });
 
   if (response.status !== 200) {
-    spinner.stopAndPersist()
+    spinner.stopAndPersist();
     throw new Error(
       `Something went wrong when fetching prisma/prisma-examples. Recieved a status code ${response.status}.`,
     );
@@ -45,7 +45,9 @@ export default async function download(options: CliInput): Promise<void> {
         map(header) {
           const originalDirName = header.name.split("/")[0];
           header.name = header.name.replace(`${originalDirName}/`, "");
-          options.template = options.template.split(path.sep).join(path.posix.sep);
+          options.template = options.template
+            .split(path.sep)
+            .join(path.posix.sep);
           if (options.template) {
             if (header.name.startsWith(`${options.template}/`)) {
               header.name = header.name.replace(options.template, "");
@@ -70,8 +72,8 @@ export default async function download(options: CliInput): Promise<void> {
       `Downloaded and extracted the ${options.template} project.`,
     );
   } catch (e) {
-    spinner.stopAndPersist()
-    console.log(e)
+    spinner.stopAndPersist();
+    console.log(e);
     throw new Error(
       `Something went wrong when extracting the files from the repostory tar file.`,
     );

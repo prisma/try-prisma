@@ -13,11 +13,12 @@ export default class InteractiveCli {
     name: "",
     dirpath: "",
     pkgMgr: "",
+    anonymous: false,
   };
 
   validateUserInput() {
     if (this.answers.folder.length) {
-      const valid = validate.rootDir(this.answers.folder)
+      const valid = validate.rootDir(this.answers.folder);
       if (typeof valid === "string") {
         throw Error(valid);
       }
@@ -58,9 +59,9 @@ export default class InteractiveCli {
     // Collect user input
     if (!this.answers.folder.length) {
       this.answers.folder = await prompts.getRootDir();
-      this.projects = this.projects.filter(project =>
-        project.startsWith(this.answers.folder)
-      )
+      this.projects = this.projects.filter((project) =>
+        project.startsWith(this.answers.folder),
+      );
     }
     if (!this.answers.template.length) {
       this.answers.template = await prompts.getTemplate(this.projects);
