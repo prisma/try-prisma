@@ -1,37 +1,24 @@
-import { Command } from "commander";
-import { version } from "../../package.json";
-import { CliInput } from "../utils/types";
+import { Command } from "@molt/command";
+import { z } from "zod";
 
 export default () => {
-  const program = new Command();
+  const args = Command.parameters({
+    "t template": z
+      .string()
+      .optional()
+      .describe(
+        "Available options are folders within the `javascript` and `typescript` directories.",
+      ),
+    "i install": z
+      .union([
+        z.boolean().describe("Using -i or --install will assume `true`"),
+        z.enum(["npm", "yarn", "pnpm"]).describe("Select a package manager"),
+      ])
+      .describe("Automatically install packages?")
+      .default(false),
+    "n name": z.string().optional().describe("Resulting directory's name"),
+    "p path": z.string().optional().describe("Resulting directory's location"),
+  }).parse();
 
-  program
-    .name("try-prisma")
-    .description(
-      "Quickly get up and running with one of Prisma's many starter templates.",
-    )
-    .version(version)
-    .option(
-      "-t, --template <template-name>",
-      "Which example project would you like to start off with? The available options are folders within the `javascript` and `typescript` directories.",
-    )
-    .option(
-      "-i, --install [package-manager]",
-      "Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm]",
-    )
-    .option(
-      "-n, --name <project-name>",
-      "What should the resulting directory be named?",
-    )
-    .option(
-      "-p, --path <dir-path>",
-      "Where should the resulting directory be created?",
-    )
-    .option(
-      "-p, --path <dir-path>",
-      "Where should the resulting directory be created?",
-    )
-    .parse(process.argv);
-
-  return program.opts<Omit<CliInput & { path: string }, 'dirpath'>>();
+  return args;
 };

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import chalk from 'chalk'
+import chalk from "chalk";
 import InputCollector from "./cli/input-collector";
 import logger from "./utils/logger";
 import CLI from "./cli";
@@ -9,19 +9,19 @@ import installPackages from "./helpers/installPackages";
 const main = async () => {
   const { template, install, name, path: dirpath } = CLI();
   const ic = new InputCollector();
-  const instructions: string[] = []
+  const instructions: string[] = [];
 
   const addInstruction = (name: string, details: string) => {
     instructions.push(`
   ${chalk.bold(`${instructions.length + 1}. ${name}`)}
       ${details}
-    `)
-  }
+    `);
+  };
 
   // Pre-populate the input collector with CLI input
   if (template) {
     ic.answers.template = template;
-    ic.answers.folder = template.split('/')[0]
+    ic.answers.folder = template.split("/")[0];
   }
 
   if (name) {
@@ -48,29 +48,36 @@ const main = async () => {
     await installPackages(input.pkgMgr, `${input.dirpath}/${input.name}`);
   }
 
-  addInstruction('Navigate into the project directory:',
-    chalk.hex('#4C51BF')(`cd ${input.dirpath}/${input.name}`)
-  )
+  addInstruction(
+    "Navigate into the project directory:",
+    chalk.hex("#4C51BF")(`cd ${input.dirpath}/${input.name}`),
+  );
 
   if (!input.install) {
-    addInstruction('Install dependencies:',
-      chalk.hex('#4C51BF')(`npm install`)
-    )
+    addInstruction(
+      "Install dependencies:",
+      chalk.hex("#4C51BF")(`npm install`),
+    );
   }
 
-  addInstruction('Create and execute initial migration based on `schema.prisma`:',
-    chalk.hex('#4C51BF')(`npx prisma migrate dev`)
-  )
+  addInstruction(
+    "Create and execute initial migration based on `schema.prisma`:",
+    chalk.hex("#4C51BF")(`npx prisma migrate dev`),
+  );
 
   logger.success(`
 ${chalk.bold(`The project is good to go! Next steps:`)}
-${instructions.join('')}
+${instructions.join("")}
 For more information about this project, visit:
-${chalk.gray.underline(`https://github.com/prisma/prisma-examples/tree/latest/${input.template}`)}
-`)
+${chalk.gray.underline(
+  `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
+)}
+`);
   logger.success(
-    `If you have any feedback about this specific template, we want to hear it!\nSubmit any feedback here: ${chalk.gray.underline('https://pris.ly/prisma-examples-feedback')} `
-  )
+    `If you have any feedback about this specific template, we want to hear it!\nSubmit any feedback here: ${chalk.gray.underline(
+      "https://pris.ly/prisma-examples-feedback",
+    )} `,
+  );
 };
 
 main().catch((e) => {
@@ -87,4 +94,4 @@ main().catch((e) => {
   }
 });
 
-export default main // Exported for testing purposes
+export default main; // Exported for testing purposes
