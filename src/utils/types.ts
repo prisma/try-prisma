@@ -6,4 +6,5 @@ export type CliInput = {
   dirpath: string;
   pkgMgr: string;
   anonymous: boolean;
+  vscode: boolean;
 };

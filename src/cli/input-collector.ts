@@ -14,6 +14,7 @@ export default class InteractiveCli {
     dirpath: "",
     pkgMgr: "",
     anonymous: false,
+    vscode: false,
   };
 
   validateUserInput() {
