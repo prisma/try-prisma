@@ -51,6 +51,7 @@ describe("Input Collector", () => {
         dirpath: "lskdjf",
         folder: "javascript",
         anonymous: false,
+        vscode: false,
       });
     });
   });
