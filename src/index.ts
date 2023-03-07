@@ -7,7 +7,7 @@ import download from "./helpers/download";
 import installPackages from "./helpers/installPackages";
 
 const main = async () => {
-  const { template, install, name, path: dirpath } = CLI();
+  const { template, install, name, dirpath, anonymous } = CLI();
   const ic = new InputCollector();
   const instructions: string[] = [];
 
@@ -19,6 +19,10 @@ const main = async () => {
   };
 
   // Pre-populate the input collector with CLI input
+  if (anonymous) {
+    ic.answers.anonymous = anonymous;
+  }
+
   if (template) {
     ic.answers.template = template;
     ic.answers.folder = template.split("/")[0];

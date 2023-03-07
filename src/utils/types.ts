@@ -5,4 +5,5 @@ export type CliInput = {
   name: string;
   dirpath: string;
   pkgMgr: string;
+  anonymous: boolean;
 };
