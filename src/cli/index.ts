@@ -6,7 +6,7 @@ import validation from "./validation";
 import { getProjects } from "../helpers";
 import parameters from "./parameters";
 import prompts from "./prompts";
-
+import dedent from "dedent";
 export default class Cli {
   instructions: string[] = [];
   projects: string[] = [];

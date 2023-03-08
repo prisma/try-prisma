@@ -4,7 +4,6 @@ import { promisify } from "util";
 import gunzip from "gunzip-maybe";
 import tar from "tar-fs";
 import fetch from "node-fetch";
-import logger from "./logger";
 import ora from "ora";
 
 import { EXAMPLES_REPO_TAR } from "../constants";
@@ -14,10 +13,9 @@ const pipeline = promisify(stream.pipeline);
 
 export default async function download(options: CliInput): Promise<void> {
   if (!options.template.length) {
-    logger.warn(
+    throw new Error(
       `No project was selected from the prisma/prisma-examples repostory.`,
     );
-    throw new Error();
   }
 
   const spinner = ora();
@@ -68,11 +66,10 @@ export default async function download(options: CliInput): Promise<void> {
       }),
     );
     spinner.succeed(
-      `Downloaded and extracted the ${options.template} project.`,
+      `Downloaded and extracted the ${options.template} project.\n`,
     );
   } catch (e) {
     spinner.stopAndPersist();
-    console.log(e);
     throw new Error(
       `Something went wrong when extracting the files from the repostory tar file.`,
     );

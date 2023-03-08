@@ -7,13 +7,8 @@ import installPackages from "./helpers/installPackages";
 import vscodeExtensionSuggestion from "./helpers/vscodeExtensionSuggestion";
 
 const main = async () => {
-  // Collect terminal arguments on instantiation
   const cli = new CLI();
-
-  // Collect any manually entered input and supplement the pre-populated values
   const input = await cli.collect();
-
-  // Download template and optionally install packages
   await download(input);
 
   if (input.install) {
@@ -59,7 +54,7 @@ const main = async () => {
 
 main().catch((e) => {
   if (e instanceof Error) {
-    logger.error(e);
+    logger.error(e.message);
   } else {
     logger.error(
       "Something strange happened... If the problem persists, please create a GitHub issue with the error below 👇🏻",

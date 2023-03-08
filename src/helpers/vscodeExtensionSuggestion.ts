@@ -20,7 +20,7 @@ export default async function vscodeExtensionSuggestion(options: CliInput) {
     content,
     (err) => {
       if (err) {
-        console.error(err);
+        throw new Error(err?.message);
       }
     },
   );
