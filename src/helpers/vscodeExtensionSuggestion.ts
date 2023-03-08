@@ -1,9 +1,6 @@
 import { CliInput } from "../types";
-import { exec } from "child_process";
+import execa from "./execa";
 import fs from "fs";
-import { promisify } from "util";
-
-const execa = promisify(exec);
 
 export default async function vscodeExtensionSuggestion(options: CliInput) {
   const content = `

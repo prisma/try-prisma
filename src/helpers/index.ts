@@ -1,4 +1,5 @@
 import download from "./download";
+import execa from "./execa";
 import getProjects from "./getProjects";
 import installPackages from "./installPackages";
 import logger from "./logger";
@@ -10,4 +11,5 @@ export {
   installPackages,
   logger,
   vscodeExtensionSuggestion,
+  execa,
 };
