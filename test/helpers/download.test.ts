@@ -1,14 +1,6 @@
 import download from "../../src/helpers/download";
 import * as fetch from "node-fetch";
-import {
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("Download", () => {
   beforeEach(() => {
@@ -23,11 +15,13 @@ describe("Download", () => {
       async () =>
         await download({
           template: "",
-          dirpath: "dirpath",
+          path: "dirpath",
           install: true,
           name: "name",
           pkgMgr: "pnpm",
           folder: "typescript",
+          anonymous: false,
+          vscode: false,
         }),
     ).rejects.toThrow();
   });
@@ -38,11 +32,13 @@ describe("Download", () => {
       async () =>
         await download({
           template: "template",
-          dirpath: "dirpath",
+          path: "dirpath",
           install: true,
           name: "name",
           pkgMgr: "pnpm",
           folder: "typescript",
+          vscode: false,
+          anonymous: false,
         }),
     ).rejects.toThrow();
   });
@@ -58,11 +54,13 @@ describe("Download", () => {
     expect(async () => {
       await download({
         template: "template",
-        dirpath: "dirpath",
+        path: "dirpath",
         install: true,
         name: "name",
         pkgMgr: "pnpm",
         folder: "typescript",
+        vscode: false,
+        anonymous: false,
       });
     }).not.toThrow();
   });

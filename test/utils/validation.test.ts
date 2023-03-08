@@ -1,40 +1,33 @@
-import validate from "../../src/utils/validation";
+import validate from "../../src/cli/validation";
 import { expect, it } from "vitest";
 import { describe } from "vitest";
 
 describe("Validation", () => {
   describe("directoryName()", () => {
     it("Should fail with an invalid directory name", () => {
-      const result = validate.directoryName("aux");
-      expect(result).not.toBe(true);
+      expect(() => validate.directoryName("aux")).toThrow();
     });
     it("Should return true if valid", () => {
-      const result = validate.directoryName("name");
-      expect(result).toBe(true);
+      expect(() => validate.directoryName("name")).not.toThrow();
     });
   });
   describe("directory()", () => {
     it('Should fail with a path that ends in "/"', () => {
-      const result = validate.directory("test/");
-      expect(result).not.toBe(true);
+      expect(() => validate.directory("test/")).toThrow();
     });
     it("Should fail if you try to reach a directory that does not exist", () => {
-      const result = validate.directory("/this/does/not/exist");
-      expect(result).not.toBe(true);
+      expect(() => validate.directory("/this/does/not/exist")).toThrow();
     });
     it("Should success with a valid directory", () => {
-      const result = validate.directory(".");
-      expect(result).toBe(true);
+      expect(() => validate.directory(".")).not.toThrow();
     });
   });
   describe("project()", () => {
     it("Should fail if the project is not in the list of available projects", () => {
-      const result = validate.project(["1"], "2");
-      expect(result).not.toBe(true);
+      expect(() => validate.project(["1"], "2")).toThrow();
     });
     it("Should succees if a valid project was selected", () => {
-      const result = validate.project(["1"], "1");
-      expect(result).toBe(true);
+      expect(() => validate.project(["1"], "1")).not.toThrow();
     });
   });
 });

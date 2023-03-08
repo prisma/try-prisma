@@ -1,6 +1,5 @@
-import InputCollector from "../../src/cli/input-collector";
+import CLI from "../../src/cli";
 import * as getProjects from "../../src/helpers/getProjects";
-import * as validation from "../../src/utils/validation";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("../../src/helpers/getProjects", () => ({
@@ -19,36 +18,31 @@ vi.mock("../../src/cli/prompts", () => ({
 }));
 
 describe("Input Collector", () => {
-  let MockInputCollector;
+  let MockCLI: CLI;
   beforeEach(() => {
-    MockInputCollector = new InputCollector();
+    MockCLI = new CLI();
   });
   describe("collect()", () => {
     beforeEach(() => {
-      vi.spyOn(MockInputCollector, "validateUserInput").mockImplementationOnce(
-        () => true,
-      );
+      vi.spyOn(MockCLI, "validateUserInput").mockImplementationOnce(() => true);
       vi.spyOn(getProjects, "default").mockImplementationOnce(async () => []);
     });
     afterEach(() => {
       vi.resetAllMocks();
     });
-    it("Should validate the initial input", async () => {
-      await MockInputCollector.collect();
-      expect(MockInputCollector.validateUserInput).toHaveBeenCalled();
-    });
     it("Should grab the list of projects", async () => {
-      await MockInputCollector.collect();
+      await MockCLI.collect();
       expect(getProjects.default).toHaveBeenCalled();
     });
     it("Should return the input from the prompts", async () => {
-      const input = await MockInputCollector.collect();
+      const input = await MockCLI.collect();
       expect(input).toStrictEqual({
         template: "template",
         install: true,
         pkgMgr: "npm",
         name: "projectName",
-        dirpath: "lskdjf",
+        help: false,
+        path: "lskdjf",
         folder: "javascript",
         anonymous: false,
         vscode: false,
@@ -71,26 +65,16 @@ describe("Input Collector", () => {
       vi.resetAllMocks();
     });
     it("Should return an error if a template is provided and is invalid", () => {
-      MockInputCollector.answers.template = "template";
-      vi.spyOn(validation.default as any, "project").mockImplementationOnce(
-        () => "invalid",
-      );
-      expect(() => MockInputCollector.validateUserInput()).toThrow();
+      MockCLI.args.template = "template";
+      expect(() => MockCLI.validateUserInput()).toThrow();
     });
     it("Should return an error if a projcet name is provided and is invalid", () => {
-      MockInputCollector.answers.name = "name";
-      vi.spyOn(
-        validation.default as any,
-        "directoryName",
-      ).mockImplementationOnce(() => "invalid");
-      expect(() => MockInputCollector.validateUserInput()).toThrow();
+      MockCLI.args.name = "com2";
+      expect(() => MockCLI.validateUserInput()).toThrow();
     });
     it("Should return an error if a directory name is provided and is invalid", () => {
-      MockInputCollector.answers.dirpath = "directory";
-      vi.spyOn(validation.default as any, "directory").mockImplementationOnce(
-        () => "invalid",
-      );
-      expect(() => MockInputCollector.validateUserInput()).toThrow();
+      MockCLI.args.path = "directory";
+      expect(() => MockCLI.validateUserInput()).toThrow();
     });
   });
 });
