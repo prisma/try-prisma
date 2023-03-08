@@ -15,13 +15,10 @@ export default {
     .describe("Automatically install packages?")
     .default(false),
   "n name": z.string().default("").describe("Resulting directory's name"),
-
   "p path": z.string().default("").describe("Resulting directory's location"),
-
   "a anonymous": z
     .boolean()
     .default(false)
     .describe("Should this invocation be recorded with Prisma's analytics?"),
-
   "v vscode": z.boolean().default(false).describe("Are you using VSCode?"),
 };

@@ -5,6 +5,7 @@ import chalk from "chalk";
 import logger from "../helpers/logger";
 
 inquirer.registerPrompt("search-list", SearchList);
+
 const getTemplate = async (projects: string[]): Promise<string> => {
   logger.success(
     `\nDon't see what you're looking for? Request a new template here:\n\xa0\xa0➡ ${chalk.underline.gray(
@@ -18,7 +19,12 @@ const getTemplate = async (projects: string[]): Promise<string> => {
     name: "template",
     choices: projects,
     validate: (answer) => {
-      return validate.project(projects, answer);
+      try {
+        validate.project(projects, answer);
+      } catch (e) {
+        return false;
+      }
+      return true;
     },
   });
 
@@ -78,7 +84,12 @@ const getProjectName = async (defaultValue = ""): Promise<string> => {
     default: defaultValue,
     filter: (input) => input.replace("/", "_").trim(),
     validate(answer) {
-      return validate.directoryName(answer);
+      try {
+        validate.directoryName(answer);
+      } catch (e) {
+        return false;
+      }
+      return true;
     },
   });
   return dirname;
@@ -91,7 +102,12 @@ const getProjectDirectory = async (): Promise<string> => {
     name: "dirpath",
     default: ".",
     validate(answer) {
-      return validate.directory(answer);
+      try {
+        validate.directory(answer);
+      } catch (e) {
+        return false;
+      }
+      return true;
     },
   });
   return dirpath;

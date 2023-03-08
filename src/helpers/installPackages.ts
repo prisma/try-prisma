@@ -22,17 +22,14 @@ export default async function installPackages(
   }
 
   try {
-    // Run the install command
     await execa(`${manager.toLowerCase()} install`, {
       cwd: `${process.cwd()}/${execDir}`,
     });
     spinner.succeed(`Installed packages.`);
   } catch (e) {
     spinner.stopAndPersist();
-    console.log(e);
     throw Error(
       `There was a problem installing your packages.\n${e.message}${
-        // If this was a "command not found" error, let the user know they can install the pkgMgr and run it manually
         e.message.indexOf("command not found") > -1
           ? chalk.cyan(
               `No worries. Once you install ${chalk.green(

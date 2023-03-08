@@ -18,6 +18,7 @@ export default class Cli {
     const folder = cliArgs.template ? cliArgs.template.split("/")[0] : "";
     this.args = { ...cliArgs, folder, install: false, pkgMgr: "" };
     this.extractManualIntallInstructions(cliArgs.install);
+    this.validateUserInput();
   }
 
   extractManualIntallInstructions(install: boolean | "npm" | "yarn" | "pnpm") {
@@ -32,37 +33,23 @@ export default class Cli {
 
   addInstruction(name: string, details: string) {
     this.instructions.push(`
-  ${chalk.bold(`${this.instructions.length + 1}. ${name}`)}
+      ${chalk.bold(`${this.instructions.length + 1}. ${name}`)}
       ${details}
     `);
   }
 
   validateUserInput() {
     if (this.args.folder.length) {
-      const valid = validation.rootDir(this.args.folder);
-      if (typeof valid === "string") {
-        throw Error(valid);
-      }
+      validation.rootDir(this.args.folder);
     }
     if (this.args.template.length) {
-      const valid = validation.project(this.projects, this.args.template);
-      if (typeof valid === "string") {
-        throw Error(valid);
-      }
+      validation.project(this.projects, this.args.template);
     }
-
     if (this.args.name.length) {
-      const valid = validation.directoryName(this.args.name);
-      if (typeof valid === "string") {
-        throw Error(valid);
-      }
+      validation.directoryName(this.args.name);
     }
-
     if (this.args.path.length) {
-      const valid = validation.directory(this.args.path);
-      if (typeof valid === "string") {
-        throw Error(valid);
-      }
+      validation.directory(this.args.path);
     }
   }
 
@@ -74,9 +61,6 @@ export default class Cli {
     this.projects = await getProjects();
     spinner.succeed(`Loaded ${this.projects.length} templates`);
 
-    // Validate user input from command line options
-    this.validateUserInput();
-
     // Collect user input
     if (!this.args.folder.length) {
       this.args.folder = await prompts.getRootDir();
@@ -84,6 +68,7 @@ export default class Cli {
         project.startsWith(this.args.folder),
       );
     }
+
     if (!this.args.template.length) {
       this.args.template = await prompts.getTemplate(this.projects);
     }

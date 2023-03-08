@@ -22,7 +22,6 @@ export default async function vscodeExtensionSuggestion(options: CliInput) {
       if (err) {
         console.error(err);
       }
-      // file written successfully
     },
   );
 }

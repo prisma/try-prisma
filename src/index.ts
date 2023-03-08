@@ -42,13 +42,14 @@ const main = async () => {
   );
 
   logger.success(`
-${chalk.bold(`The project is good to go! Next steps:`)}
-${cli.instructions.join("")}
-For more information about this project, visit:
-${chalk.gray.underline(
-  `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
-)}
-`);
+    ${chalk.bold(`The project is good to go! Next steps:`)}
+    ${cli.instructions.join("")}
+    For more information about this project, visit:
+    ${chalk.gray.underline(
+      `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
+    )}
+  `);
+
   logger.success(
     `If you have any feedback about this specific template, we want to hear it!\nSubmit any feedback here: ${chalk.gray.underline(
       "https://pris.ly/prisma-examples-feedback",
@@ -63,11 +64,10 @@ main().catch((e) => {
     logger.error(
       "Something strange happened... If the problem persists, please create a GitHub issue with the error below 👇🏻",
     );
-    console.log(e);
   }
   if (!process.env.VITEST) {
     process.exit(1);
   }
 });
 
-export default main; // Exported for testing purposes
+export default main;
