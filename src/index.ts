@@ -1,82 +1,49 @@
 #!/usr/bin/env node
 import chalk from "chalk";
-import InputCollector from "./cli/input-collector";
-import logger from "./utils/logger";
+import logger from "./helpers/logger";
 import CLI from "./cli";
 import download from "./helpers/download";
 import installPackages from "./helpers/installPackages";
 import vscodeExtensionSuggestion from "./helpers/vscodeExtensionSuggestion";
 
 const main = async () => {
-  const { template, install, name, dirpath, anonymous, vscode } = CLI();
-  const ic = new InputCollector();
-  const instructions: string[] = [];
-
-  const addInstruction = (name: string, details: string) => {
-    instructions.push(`
-  ${chalk.bold(`${instructions.length + 1}. ${name}`)}
-      ${details}
-    `);
-  };
-
-  // Pre-populate the input collector with CLI input
-  if (anonymous) {
-    ic.answers.anonymous = anonymous;
-  }
-
-  if (template) {
-    ic.answers.template = template;
-    ic.answers.folder = template.split("/")[0];
-  }
-
-  if (name) {
-    ic.answers.name = name.replace("/", "_").trim();
-  }
-
-  if (install) {
-    ic.answers.install = true;
-    if (typeof install === "string" && install.trim().length) {
-      ic.answers.pkgMgr = install.trim();
-    }
-  }
-
-  if (dirpath) {
-    ic.answers.dirpath = dirpath;
-  }
+  // Collect terminal arguments on instantiation
+  const cli = new CLI();
 
   // Collect any manually entered input and supplement the pre-populated values
-  const input = await ic.collect();
+  const input = await cli.collect();
+
   // Download template and optionally install packages
   await download(input);
 
   if (input.install) {
-    await installPackages(input.pkgMgr, `${input.dirpath}/${input.name}`);
+    await installPackages(input.pkgMgr, `${input.path}/${input.name}`);
   }
 
-  if (vscode) {
+  if (input.vscode) {
     await vscodeExtensionSuggestion(input);
   }
 
-  addInstruction(
+  cli.addInstruction(
     "Navigate into the project directory:",
-    chalk.hex("#4C51BF")(`cd ${input.dirpath}/${input.name}`),
+    chalk.hex("#4C51BF")(`cd ${input.path}/${input.name}`),
   );
 
   if (!input.install) {
-    addInstruction(
+    cli.addInstruction(
       "Install dependencies:",
       chalk.hex("#4C51BF")(`npm install`),
     );
   }
 
-  addInstruction(
+  cli.addInstruction(
     "Create and execute initial migration based on `schema.prisma`:",
     chalk.hex("#4C51BF")(`npx prisma migrate dev`),
   );
 
   logger.success(`
 ${chalk.bold(`The project is good to go! Next steps:`)}
-${instructions.join("")}
+${cli.instructions.join("")}
 For more information about this project, visit:
 ${chalk.gray.underline(
   `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,

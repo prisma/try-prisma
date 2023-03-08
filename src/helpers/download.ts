@@ -4,11 +4,11 @@ import { promisify } from "util";
 import gunzip from "gunzip-maybe";
 import tar from "tar-fs";
 import fetch from "node-fetch";
-import logger from "../utils/logger";
+import logger from "./logger";
 import ora from "ora";
 
-import { EXAMPLES_REPO_TAR } from "../utils/constants";
-import { CliInput } from "../utils/types";
+import { EXAMPLES_REPO_TAR } from "../constants";
+import { CliInput } from "../types";
 
 const pipeline = promisify(stream.pipeline);
 
@@ -22,7 +22,6 @@ export default async function download(options: CliInput): Promise<void> {
 
   const spinner = ora();
   spinner.start(`Downloading and extracting the ${options.template} project`);
-
   // Download the repo
   const response = await fetch(EXAMPLES_REPO_TAR, {
     method: "POST",
@@ -41,7 +40,7 @@ export default async function download(options: CliInput): Promise<void> {
       // Unzip it
       response.body?.pipe(gunzip()),
       // Extract the stuff into this directory
-      tar.extract(`${options.dirpath}/${options.name}`, {
+      tar.extract(`${options.path}/${options.name}`, {
         map(header) {
           const originalDirName = header.name.split("/")[0];
           header.name = header.name.replace(`${originalDirName}/`, "");

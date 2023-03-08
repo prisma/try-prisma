@@ -1,37 +1,111 @@
 import { Command } from "@molt/command";
-import { z } from "zod";
-import { CliInput } from "../utils/types";
+import ora from "ora";
+import chalk from "chalk";
+import { CliInput } from "../types";
+import validation from "./validation";
+import { getProjects } from "../helpers";
+import parameters from "./parameters";
+import prompts from "./prompts";
 
-export default (): Omit<CliInput, "folder" | "pkgMgr"> => {
-  const args = Command.parameters({
-    "t template": z
-      .string()
-      .default("")
-      .describe(
-        "Available options are folders within the `javascript` and `typescript` directories.",
-      ),
-    "i install": z
-      .union([
-        z.boolean().describe("Using -i or --install will assume `true`"),
-        z.enum(["npm", "yarn", "pnpm"]).describe("Select a package manager"),
-      ])
-      .describe("Automatically install packages?")
-      .default(false),
-    "n name": z.string().default("").describe("Resulting directory's name"),
-    "p path": z.string().default("").describe("Resulting directory's location"),
-    "a anonymous": z
-      .boolean()
-      .default(false)
-      .describe("Should this invocation be recorded with Prisma's analytics?"),
-    "v vscode": z.boolean().default(false).describe("Are you using VSCode?"),
-  }).parse();
+export default class Cli {
+  instructions: string[] = [];
+  projects: string[] = [];
+  args: CliInput;
 
-  return {
-    template: args.template,
-    dirpath: args.path,
-    install: args.install,
-    name: args.name,
-    anonymous: args.anonymous,
-    vscode: args.vscode,
-  };
-};
+  constructor() {
+    const cliArgs = Command.parameters(parameters).parse();
+    cliArgs.name = cliArgs.name ? cliArgs.name.replace("/", "_").trim() : "";
+    const folder = cliArgs.template ? cliArgs.template.split("/")[0] : "";
+    this.args = { ...cliArgs, folder, install: false, pkgMgr: "" };
+    this.extractManualIntallInstructions(cliArgs.install);
+  }
+
+  extractManualIntallInstructions(install: boolean | "npm" | "yarn" | "pnpm") {
+    if (typeof install !== "string") {
+      this.args.install = install;
+      this.args.pkgMgr = "";
+    } else {
+      this.args.pkgMgr = install;
+      this.args.install = true;
+    }
+  }
+
+  addInstruction(name: string, details: string) {
+    this.instructions.push(`
+  ${chalk.bold(`${this.instructions.length + 1}. ${name}`)}
+      ${details}
+    `);
+  }
+
+  validateUserInput() {
+    if (this.args.folder.length) {
+      const valid = validation.rootDir(this.args.folder);
+      if (typeof valid === "string") {
+        throw Error(valid);
+      }
+    }
+    if (this.args.template.length) {
+      const valid = validation.project(this.projects, this.args.template);
+      if (typeof valid === "string") {
+        throw Error(valid);
+      }
+    }
+
+    if (this.args.name.length) {
+      const valid = validation.directoryName(this.args.name);
+      if (typeof valid === "string") {
+        throw Error(valid);
+      }
+    }
+
+    if (this.args.path.length) {
+      const valid = validation.directory(this.args.path);
+      if (typeof valid === "string") {
+        throw Error(valid);
+      }
+    }
+  }
+
+  async collect() {
+    // Load the list of available templates
+    const spinner = ora();
+    spinner.text = "Loading example projects";
+    spinner.start();
+    this.projects = await getProjects();
+    spinner.succeed(`Loaded ${this.projects.length} templates`);
+
+    // Validate user input from command line options
+    this.validateUserInput();
+
+    // Collect user input
+    if (!this.args.folder.length) {
+      this.args.folder = await prompts.getRootDir();
+      this.projects = this.projects.filter((project) =>
+        project.startsWith(this.args.folder),
+      );
+    }
+    if (!this.args.template.length) {
+      this.args.template = await prompts.getTemplate(this.projects);
+    }
+
+    if (!this.args.install) {
+      this.args.install = await prompts.getInstallSelection();
+    }
+
+    if (!this.args.pkgMgr.length && this.args.install) {
+      this.args.pkgMgr = await prompts.selectManager();
+    }
+
+    if (!this.args.name.length) {
+      this.args.name = await prompts.getProjectName(
+        this.args.template?.replace("/", "_"),
+      );
+    }
+
+    if (!this.args.path.length) {
+      this.args.path = await prompts.getProjectDirectory();
+    }
+
+    return this.args;
+  }
+}

@@ -1,12 +1,16 @@
 import inquirer from "inquirer";
 import SearchList from "inquirer-search-list";
-import validate from "../utils/validation";
-import chalk from 'chalk'
-import logger from '../utils/logger'
+import validate from "./validation";
+import chalk from "chalk";
+import logger from "../helpers/logger";
 
 inquirer.registerPrompt("search-list", SearchList);
 const getTemplate = async (projects: string[]): Promise<string> => {
-  logger.success(`\nDon't see what you're looking for? Request a new template here:\n\xa0\xa0➡ ${chalk.underline.gray('https://pris.ly/prisma-examples-suggestion')}\n`)
+  logger.success(
+    `\nDon't see what you're looking for? Request a new template here:\n\xa0\xa0➡ ${chalk.underline.gray(
+      "https://pris.ly/prisma-examples-suggestion",
+    )}\n`,
+  );
   const { template } = await inquirer.prompt({
     // @ts-expect-error Inquirer doesn't register the type.
     type: "search-list",
@@ -22,19 +26,24 @@ const getTemplate = async (projects: string[]): Promise<string> => {
 };
 
 const getRootDir = async (): Promise<string> => {
-  logger.success(`\nThese options correspond to the root directories in the prisma-examples repository:\n`)
+  logger.success(
+    `\nThese options correspond to the root directories in the prisma-examples repository:\n`,
+  );
   const { rootDir } = await inquirer.prompt({
     // @ts-expect-error Inquirer doesn't register the type.
     type: "search-list",
     message: `Which language do you want to use?`,
     name: "rootDir",
-    choices: [{
-      name: 'TypeScript',
-      value: 'typescript'
-    }, {
-      name: 'JavaScript',
-      value: 'javascript'
-    }]
+    choices: [
+      {
+        name: "TypeScript",
+        value: "typescript",
+      },
+      {
+        name: "JavaScript",
+        value: "javascript",
+      },
+    ],
   });
 
   return rootDir;
@@ -50,7 +59,7 @@ const getInstallSelection = async (): Promise<boolean> => {
   return Boolean(packages);
 };
 
-const selectManager = async (): Promise<string> => {
+const selectManager = async (): Promise<"npm" | "yarn" | "pnpm"> => {
   const { manager } = await inquirer.prompt({
     type: "list",
     message: "Which package manager do you prefer?",
@@ -94,5 +103,5 @@ export default {
   getProjectName,
   selectManager,
   getTemplate,
-  getRootDir
+  getRootDir,
 };

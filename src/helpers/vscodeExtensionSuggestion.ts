@@ -1,8 +1,9 @@
 import { exec } from "child_process";
 import { promisify } from "util";
 const execa = promisify(exec);
-import { CliInput } from "../utils/types";
+import { CliInput } from "../types";
 import fs from "fs";
+
 export default async function vscodeExtensionSuggestion(options: CliInput) {
   const content = `
   {
@@ -13,9 +14,9 @@ export default async function vscodeExtensionSuggestion(options: CliInput) {
     ]
   }
   `;
-  await execa(`mkdir ${options.dirpath}/${options.name}/.vscode`);
+  await execa(`mkdir ${options.path}/${options.name}/.vscode`);
   fs.writeFile(
-    `${options.dirpath}/${options.name}/.vscode/extensions.json`,
+    `${options.path}/${options.name}/.vscode/extensions.json`,
     content,
     (err) => {
       if (err) {

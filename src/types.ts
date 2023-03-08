@@ -1,10 +1,10 @@
 export type CliInput = {
   template: string;
-  folder: string;
-  install: boolean | string;
+  install: boolean;
+  pkgMgr: "" | "npm" | "yarn" | "pnpm";
   name: string;
-  dirpath: string;
-  pkgMgr: string;
   anonymous: boolean;
   vscode: boolean;
+  path: string;
+  folder: string;
 };
