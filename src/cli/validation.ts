@@ -1,5 +1,5 @@
-import fs from "fs";
 import { EXAMPLES_DIR_ACCEPT } from "../constants";
+import fs from "fs";
 
 export default {
   directoryName(name: string) {

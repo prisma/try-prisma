@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import chalk from "chalk";
-import logger from "./helpers/logger";
 import CLI from "./cli";
 import download from "./helpers/download";
 import installPackages from "./helpers/installPackages";
+import logger from "./helpers/logger";
 import vscodeExtensionSuggestion from "./helpers/vscodeExtensionSuggestion";
+import chalk from "chalk";
 
 const main = async () => {
   const cli = new CLI();

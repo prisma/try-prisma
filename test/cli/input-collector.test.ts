@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import InputCollector from "../../src/cli/input-collector";
 import * as getProjects from "../../src/helpers/getProjects";
 import * as validation from "../../src/utils/validation";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("../../src/helpers/getProjects", () => ({
   default: () => [],

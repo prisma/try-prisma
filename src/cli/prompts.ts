@@ -1,8 +1,8 @@
-import inquirer from "inquirer";
-import SearchList from "inquirer-search-list";
+import logger from "../helpers/logger";
 import validate from "./validation";
 import chalk from "chalk";
-import logger from "../helpers/logger";
+import inquirer from "inquirer";
+import SearchList from "inquirer-search-list";
 
 inquirer.registerPrompt("search-list", SearchList);
 

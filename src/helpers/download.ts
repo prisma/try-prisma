@@ -1,13 +1,12 @@
-import path from "path";
-import stream from "stream";
-import { promisify } from "util";
-import gunzip from "gunzip-maybe";
-import tar from "tar-fs";
-import fetch from "node-fetch";
-import ora from "ora";
-
 import { EXAMPLES_REPO_TAR } from "../constants";
 import { CliInput } from "../types";
+import gunzip from "gunzip-maybe";
+import fetch from "node-fetch";
+import ora from "ora";
+import path from "path";
+import stream from "stream";
+import tar from "tar-fs";
+import { promisify } from "util";
 
 const pipeline = promisify(stream.pipeline);
 

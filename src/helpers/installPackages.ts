@@ -1,9 +1,10 @@
-import ora from "ora";
-import { exec } from "child_process";
-import { promisify } from "util";
-const execa = promisify(exec);
-import chalk from "chalk";
 import { CliInput } from "../types";
+import chalk from "chalk";
+import { exec } from "child_process";
+import ora from "ora";
+import { promisify } from "util";
+
+const execa = promisify(exec);
 
 export default async function installPackages(
   manager: CliInput["pkgMgr"],

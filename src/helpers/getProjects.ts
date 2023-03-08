@@ -1,5 +1,5 @@
+import { EXAMPLES_DIR_ACCEPT, EXAMPLES_REPO_URL } from "../constants";
 import fetch from "node-fetch";
-import { EXAMPLES_REPO_URL, EXAMPLES_DIR_ACCEPT } from "../constants";
 
 export default async function getProjects() {
   const result = await fetch(EXAMPLES_REPO_URL);

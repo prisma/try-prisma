@@ -1,12 +1,12 @@
-import { Command } from "@molt/command";
-import ora from "ora";
-import chalk from "chalk";
-import { CliInput } from "../types";
-import validation from "./validation";
 import { getProjects } from "../helpers";
+import { CliInput } from "../types";
 import parameters from "./parameters";
 import prompts from "./prompts";
-import dedent from "dedent";
+import validation from "./validation";
+import { Command } from "@molt/command";
+import chalk from "chalk";
+import ora from "ora";
+
 export default class Cli {
   instructions: string[] = [];
   projects: string[] = [];
