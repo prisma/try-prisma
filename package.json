@@ -1,6 +1,6 @@
 {
   "name": "try-prisma",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "description": "A CLI tool to help get you up and running with any Prisma example project.",
   "type": "module",
   "exports": "./dist/index.js",
