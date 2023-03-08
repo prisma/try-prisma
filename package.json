@@ -30,6 +30,8 @@
   "author": "Sabin Adams",
   "license": "MIT",
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/dedent": "^0.7.0",
     "@types/inquirer": "9.0.1",
     "@types/node": "18.7.1",
     "@types/node-fetch": "2.6.2",
@@ -47,6 +49,7 @@
   "dependencies": {
     "@molt/command": "^0.7.0",
     "chalk": "^5.0.1",
+    "dedent": "^0.7.0",
     "download": "^8.0.0",
     "gunzip-maybe": "^1.4.2",
     "inquirer": "^9.1.0",

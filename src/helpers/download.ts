@@ -1,28 +1,24 @@
+import { EXAMPLES_REPO_TAR } from "../constants";
+import { CliInput } from "../types";
+import gunzip from "gunzip-maybe";
+import fetch from "node-fetch";
+import ora from "ora";
 import path from "path";
 import stream from "stream";
-import { promisify } from "util";
-import gunzip from "gunzip-maybe";
 import tar from "tar-fs";
-import fetch from "node-fetch";
-import logger from "../utils/logger";
-import ora from "ora";
-
-import { EXAMPLES_REPO_TAR } from "../utils/constants";
-import { CliInput } from "../utils/types";
+import { promisify } from "util";
 
 const pipeline = promisify(stream.pipeline);
 
 export default async function download(options: CliInput): Promise<void> {
   if (!options.template.length) {
-    logger.warn(
+    throw new Error(
       `No project was selected from the prisma/prisma-examples repostory.`,
     );
-    throw new Error();
   }
 
   const spinner = ora();
   spinner.start(`Downloading and extracting the ${options.template} project`);
-
   // Download the repo
   const response = await fetch(EXAMPLES_REPO_TAR, {
     method: "POST",
@@ -41,7 +37,7 @@ export default async function download(options: CliInput): Promise<void> {
       // Unzip it
       response.body?.pipe(gunzip()),
       // Extract the stuff into this directory
-      tar.extract(`${options.dirpath}/${options.name}`, {
+      tar.extract(`${options.path}/${options.name}`, {
         map(header) {
           const originalDirName = header.name.split("/")[0];
           header.name = header.name.replace(`${originalDirName}/`, "");
@@ -69,11 +65,10 @@ export default async function download(options: CliInput): Promise<void> {
       }),
     );
     spinner.succeed(
-      `Downloaded and extracted the ${options.template} project.`,
+      `Downloaded and extracted the ${options.template} project.\n`,
     );
   } catch (e) {
     spinner.stopAndPersist();
-    console.log(e);
     throw new Error(
       `Something went wrong when extracting the files from the repostory tar file.`,
     );
