@@ -12,8 +12,12 @@ export default class Cli {
   projects: string[] = [];
   args: CliInput;
 
-  constructor() {
+  async initialize() {
+    // Grab projects
+    this.projects = await getProjects();
+    // Parse CLI arguments
     const cliArgs = Command.parameters(parameters).parse();
+    // Massage & apply the data
     cliArgs.name = cliArgs.name ? cliArgs.name.replace("/", "_").trim() : "";
     const folder = cliArgs.template ? cliArgs.template.split("/")[0] : "";
     this.args = { ...cliArgs, folder, install: false, pkgMgr: "" };
@@ -58,7 +62,6 @@ export default class Cli {
     const spinner = ora();
     spinner.text = "Loading example projects";
     spinner.start();
-    this.projects = await getProjects();
     spinner.succeed(`Loaded ${this.projects.length} templates`);
 
     // Collect user input

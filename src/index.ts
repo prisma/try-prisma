@@ -8,6 +8,7 @@ import chalk from "chalk";
 
 const main = async () => {
   const cli = new CLI();
+  await cli.initialize();
   const input = await cli.collect();
   await download(input);
 

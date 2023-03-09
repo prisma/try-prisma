@@ -9,7 +9,7 @@ export default {
     }
   },
   rootDir(path: string) {
-    if (EXAMPLES_DIR_ACCEPT.includes(path)) {
+    if (!EXAMPLES_DIR_ACCEPT.includes(path)) {
       throw new Error(
         "Invalid template. Please choose a template from the `javascript` or `typescript` directories in the prisma/prisma-examples repository.",
       );
