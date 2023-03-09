@@ -19,21 +19,24 @@ vi.mock("../../src/cli/prompts", () => ({
 
 describe("Input Collector", () => {
   let MockCLI: CLI;
-  beforeEach(() => {
+  beforeEach(async () => {
     MockCLI = new CLI();
+    await MockCLI.initialize();
   });
-  describe("collect()", () => {
-    beforeEach(() => {
-      vi.spyOn(MockCLI, "validateUserInput").mockImplementationOnce(() => true);
-      vi.spyOn(getProjects, "default").mockImplementationOnce(async () => []);
-    });
-    afterEach(() => {
-      vi.resetAllMocks();
-    });
+  describe("initialize()", () => {
     it("Should grab the list of projects", async () => {
-      await MockCLI.collect();
+      vi.spyOn(getProjects, "default").mockImplementationOnce(async () => []);
+      await MockCLI.initialize();
       expect(getProjects.default).toHaveBeenCalled();
     });
+  });
+  describe("collect()", () => {
+    beforeEach(async () => {
+      vi.spyOn(MockCLI, "validateUserInput").mockImplementationOnce(() => true);
+      vi.spyOn(getProjects, "default").mockImplementationOnce(async () => []);
+      await MockCLI.initialize();
+    });
+
     it("Should return the input from the prompts", async () => {
       const input = await MockCLI.collect();
       expect(input).toStrictEqual({
@@ -48,11 +51,14 @@ describe("Input Collector", () => {
         vscode: false,
       });
     });
+
+    afterEach(() => {
+      vi.resetAllMocks();
+    });
   });
 
   describe("validateUserInput()", () => {
     beforeEach(() => {
-      vi.spyOn(getProjects, "default").mockImplementationOnce(async () => []);
       vi.mock("../../src/utils/validation", () => ({
         default: {
           project: () => true,
@@ -60,9 +66,6 @@ describe("Input Collector", () => {
           directory: () => true,
         },
       }));
-    });
-    afterEach(() => {
-      vi.resetAllMocks();
     });
     it("Should return an error if a template is provided and is invalid", () => {
       MockCLI.args.template = "template";
@@ -75,6 +78,9 @@ describe("Input Collector", () => {
     it("Should return an error if a directory name is provided and is invalid", () => {
       MockCLI.args.path = "directory";
       expect(() => MockCLI.validateUserInput()).toThrow();
+    });
+    afterEach(() => {
+      vi.resetAllMocks();
     });
   });
 });
