@@ -1,4 +1,4 @@
-import { EXAMPLES_REPO_TAR } from "../constants";
+import { EXAMPLES_REPO_TAR, EXAMPLES_REPO_INTERCEPTOR } from "../constants";
 import { CliInput } from "../types";
 import gunzip from "gunzip-maybe";
 import fetch from "node-fetch";
@@ -13,23 +13,33 @@ const pipeline = promisify(stream.pipeline);
 export default async function download(options: CliInput): Promise<void> {
   if (!options.template.length) {
     throw new Error(
-      `No project was selected from the prisma/prisma-examples repostory.`,
+      `No project was selected from the prisma/prisma-examples repository.`,
     );
   }
 
   const spinner = ora();
   spinner.start(`Downloading and extracting the ${options.template} project`);
-  // Download the repo
-  const response = await fetch(EXAMPLES_REPO_TAR, {
+
+  // Download the repo via the interceptor
+  let response = await fetch(EXAMPLES_REPO_INTERCEPTOR, {
     method: "POST",
     body: JSON.stringify(options),
   });
 
   if (response.status !== 200) {
-    spinner.stopAndPersist();
-    throw new Error(
-      `Something went wrong when fetching prisma/prisma-examples. Recieved a status code ${response.status}.`,
-    );
+
+    // Something went wrong with the interceptor,
+    // try fetching from GitHub directly ...
+    response = await fetch(EXAMPLES_REPO_TAR, {
+      method: "GET",
+    });
+
+    if (response.status !== 200) {
+      spinner.stopAndPersist();
+      throw new Error(
+        `Something went wrong when fetching prisma/prisma-examples. Received a status code ${response.status}.`
+      );
+    }
   }
 
   try {
@@ -70,7 +80,7 @@ export default async function download(options: CliInput): Promise<void> {
   } catch (e) {
     spinner.stopAndPersist();
     throw new Error(
-      `Something went wrong when extracting the files from the repostory tar file.`,
+      `Something went wrong when extracting the files from the repository tar file.`,
     );
   }
 }
