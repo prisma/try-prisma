@@ -66,7 +66,7 @@ export default class Cli {
 
     // Collect user input
     if (!this.args.folder.length) {
-      const projects = await prompts.selectOrmOrPDP()
+      const projects = await prompts.selectORMorPDP()
       if( projects !== "orm" ) {
         this.args.folder = projects;
       } else {

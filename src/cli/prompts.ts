@@ -31,7 +31,7 @@ const getTemplate = async (projects: string[]): Promise<string> => {
   return template;
 };
 
-const selectOrmOrPDP = async (): Promise<string> => {
+const selectORMorPDP = async (): Promise<string> => {
   logger.success(
     `\nThese options correspond to the root directories in the prisma-examples repository:\n`,
   );
@@ -142,7 +142,7 @@ const getProjectDirectory = async (): Promise<string> => {
 };
 
 export default {
-  selectOrmOrPDP,
+  selectORMorPDP,
   getInstallSelection,
   getProjectDirectory,
   getProjectName,
