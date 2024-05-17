@@ -30,7 +30,7 @@ export default async function getProjects() {
         return { ...prev, [curr.path]: [] };
       }
     }, {});
-
+  
   for (const key in mergedData) {
     if (!mergedData[key].includes("package.json")) {
       delete mergedData[key];
