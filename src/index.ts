@@ -40,12 +40,9 @@ const main = async () => {
   if (input.name.includes("accelerate") || input.name.includes("pulse")) {
     logger.success(`
     ${chalk.bold(`The project is good to go! Next steps:`)}
-    ${"Please follow the instructions in the project README to run it."}
-    For more information about this project, visit:
-    ${chalk.gray.underline(
-      `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
-    )}
-  `);
+    ${"Please follow the instructions in the project README to run it:"}
+    ${chalk.bold(`https://github.com/prisma/prisma-examples/tree/latest/${input.template}/README.md`)}
+    `);
   } else {
     logger.success(`
     ${chalk.bold(`The project is good to go! Next steps:`)}
