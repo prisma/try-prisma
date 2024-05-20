@@ -66,7 +66,12 @@ export default class Cli {
 
     // Collect user input
     if (!this.args.folder.length) {
-      this.args.folder = await prompts.getRootDir();
+      const projects = await prompts.selectORMorPDP()
+      if( projects !== "orm" ) {
+        this.args.folder = projects;
+      } else {
+        this.args.folder = await prompts.getRootDir();
+      }
       this.projects = this.projects.filter((project) =>
         project.startsWith(this.args.folder),
       );

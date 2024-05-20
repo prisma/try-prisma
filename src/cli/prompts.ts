@@ -31,6 +31,34 @@ const getTemplate = async (projects: string[]): Promise<string> => {
   return template;
 };
 
+const selectORMorPDP = async (): Promise<string> => {
+  logger.success(
+    `\nThese options correspond to the root directories in the prisma-examples repository:\n`,
+  );
+  const { start } = await inquirer.prompt({
+    // @ts-expect-error Inquirer doesn't register the type.
+    type: "search-list",
+    message: `Which examples do you want to explore?`,
+    name: "start",
+    choices: [
+      {
+        name: "Prisma ORM",
+        value: "orm",
+      },
+      {
+        name: "Prisma Accelerate",
+        value: "accelerate",
+      },
+      {
+        name: "Prisma Pulse",
+        value: "pulse",
+      },
+    ],
+  });
+
+  return start;
+};
+
 const getRootDir = async (): Promise<string> => {
   logger.success(
     `\nThese options correspond to the root directories in the prisma-examples repository:\n`,
@@ -114,6 +142,7 @@ const getProjectDirectory = async (): Promise<string> => {
 };
 
 export default {
+  selectORMorPDP,
   getInstallSelection,
   getProjectDirectory,
   getProjectName,

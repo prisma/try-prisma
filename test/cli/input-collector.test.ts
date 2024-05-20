@@ -14,6 +14,7 @@ vi.mock("../../src/cli/prompts", () => ({
     getProjectName: async () => "projectName",
     getProjectDirectory: async () => "lskdjf",
     getRootDir: async () => "javascript",
+    selectORMorPDP: async () => "orm"
   },
 }));
 

@@ -37,7 +37,13 @@ const main = async () => {
     chalk.hex("#4C51BF")(`npx prisma migrate dev`),
   );
 
-  logger.success(`
+  if (input.name.includes("accelerate") || input.name.includes("pulse")) {
+    logger.success(`
+    ${chalk.bold(`The project is good to go! Next steps:`)}
+    ${"Please follow the instructions in the project README to run it."}
+    `);
+  } else {
+    logger.success(`
     ${chalk.bold(`The project is good to go! Next steps:`)}
     ${cli.instructions.join("")}
     For more information about this project, visit:
@@ -45,7 +51,7 @@ const main = async () => {
       `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
     )}
   `);
-
+  }
   logger.success(
     `If you have any feedback about this specific template, we want to hear it!\nSubmit any feedback here: ${chalk.gray.underline(
       "https://pris.ly/prisma-examples-feedback",
