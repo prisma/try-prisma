@@ -11,7 +11,7 @@ export default {
   rootDir(path: string) {
     if (!EXAMPLES_DIR_ACCEPT.includes(path)) {
       throw new Error(
-        "Invalid template. Please choose a template from the `javascript` or `typescript` directories in the prisma/prisma-examples repository.",
+        "Invalid template. Please choose a template from the `javascript`, `typescript`, `accelerate` or `pulse` directories in the prisma/prisma-examples repository.",
       );
     }
   },
@@ -21,7 +21,11 @@ export default {
     }
 
     if (!fs.existsSync(path)) {
-      throw new Error(`Unable to reach a directory at ${path}`);
+      try {
+        fs.mkdirSync(path, { recursive: true });
+      } catch {
+        throw new Error(`Unable to reach a directory at ${path}`);
+      }
     }
   },
   project(projects: string[], project: string) {
