@@ -77,7 +77,7 @@ describe("Input Collector", () => {
       expect(() => MockCLI.validateUserInput()).toThrow();
     });
     it("Should return an error if a directory name is provided and is invalid", () => {
-      MockCLI.args.path = "directory";
+      MockCLI.args.path = "directory/";
       expect(() => MockCLI.validateUserInput()).toThrow();
     });
     afterEach(() => {
