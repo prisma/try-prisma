@@ -73,9 +73,10 @@ const main = async () => {
   );
 
   logger.success(`
-    ${chalk.bold(`The project is good to go!`)}
-    ${"Please follow the instructions in the project README to run it."}
-    `);
+    ${chalk.bold(`The project is good to go! Next steps:`)}
+    ${"Please follow the instructions in the project README to run it:"}
+    ${chalk.bold(`https://github.com/prisma/prisma-examples/tree/latest/${input.template}`)}
+    `)
 
   // } else {
   //   logger.success(`
