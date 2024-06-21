@@ -11,10 +11,17 @@ const main = async () => {
   await cli.initialize();
   const input = await cli.collect();
 
+  const isProjectWithSubdirectory = cli.projectsWithSubfolders.reduce(
+    (prev, curr) => {
+      return prev || cli.args.template.includes(curr);
+    },
+    false,
+  );
+
   await download(input);
 
   if (input.install) {
-    if (cli.projectsWithSubfolders.length === 0) {
+    if (!isProjectWithSubdirectory) {
       await installPackages(input.pkgMgr, `${input.path}/${input.name}`);
     } else {
       if (cli.args.template.includes("fullstack-simple-chat")) {
