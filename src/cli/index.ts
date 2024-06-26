@@ -11,10 +11,15 @@ export default class Cli {
   instructions: string[] = [];
   projects: string[] = [];
   args: CliInput;
+  projectsWithSubfolders: string[] = [];
 
   async initialize() {
     // Grab projects
-    this.projects = await getProjects();
+    const result = await getProjects();
+    
+    this.projects = result?.[0] ?? []
+    this.projectsWithSubfolders = result?.[1] ?? []
+
     // Parse CLI arguments
     const cliArgs = Command.parameters(parameters).parse();
     // Massage & apply the data

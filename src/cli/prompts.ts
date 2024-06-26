@@ -115,6 +115,7 @@ const getProjectName = async (defaultValue = ""): Promise<string> => {
       try {
         validate.directoryName(answer);
       } catch (e) {
+        console.log("\n✗ " + chalk.red(e.message))
         return false;
       }
       return true;
@@ -133,6 +134,7 @@ const getProjectDirectory = async (): Promise<string> => {
       try {
         validate.directory(answer);
       } catch (e) {
+        console.log("\n✗ " + chalk.red(e.message))
         return false;
       }
       return true;

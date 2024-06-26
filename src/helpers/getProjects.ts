@@ -37,5 +37,19 @@ export default async function getProjects() {
     }
   }
 
-  return Object.keys(mergedData).sort();
+  const projectsWithSubfolders:string[] = []
+
+  const paths = Object.keys(mergedData).map(item => {
+    const folders = item.split('/');
+    
+    if(folders.length >= 3) {
+      projectsWithSubfolders.push(folders[1])
+    }
+
+    return folders.length >= 3 ? folders.slice(0, -1).join('/') : item;
+  });
+
+  const uniquePaths = Array.from(new Set(paths)).sort();
+  
+  return [uniquePaths, projectsWithSubfolders];
 }

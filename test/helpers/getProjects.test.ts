@@ -32,7 +32,7 @@ describe("Get Projects", () => {
     });
     const data = await getProjects();
 
-    expect(data).toStrictEqual([]);
+    expect(data[0]).toStrictEqual([]);
   });
   it("Should ignore directories that do not have a package.json", async () => {
     vi.spyOn(fetch as any, "default").mockResolvedValue({
@@ -52,7 +52,7 @@ describe("Get Projects", () => {
     });
     const data = await getProjects();
 
-    expect(data).toStrictEqual([]);
+    expect(data[0]).toStrictEqual([]);
   });
 
   it("Should return an array with a file path to a valid project", async () => {
@@ -73,8 +73,8 @@ describe("Get Projects", () => {
     });
     const data = await getProjects();
 
-    expect(data.length).toBe(1);
-    expect(data).toContain("typescript");
+    expect(data[0].length).toBe(1);
+    expect(data[0]).toContain("typescript");
   });
 
   it('Should work as expected with a "tree" type', async () => {
@@ -95,8 +95,8 @@ describe("Get Projects", () => {
     });
     const data = await getProjects();
 
-    expect(data.length).toBe(1);
-    expect(data).toContain("javascript");
+    expect(data[0].length).toBe(1);
+    expect(data[0]).toContain("javascript");
   });
 
   it("Should return multiple valid projects", async () => {
@@ -124,10 +124,10 @@ describe("Get Projects", () => {
       }),
     });
     const data = await getProjects();
-
-    expect(data.length).toBe(2);
-    expect(data).toContain("javascript");
-    expect(data).toContain("typescript");
+    console.log(data[0])
+    expect(data[0].length).toBe(2);
+    expect(data[0]).toContain("typescript");
+    expect(data[0]).toContain("javascript");
   });
 
   it("Should return valid projects and filter bad projects", async () => {
@@ -156,7 +156,7 @@ describe("Get Projects", () => {
     });
     const data = await getProjects();
 
-    expect(data.length).toBe(1);
-    expect(data).toContain("typescript");
+    expect(data[0].length).toBe(1);
+    expect(data[0]).toContain("typescript");
   });
 });

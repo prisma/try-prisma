@@ -11,7 +11,7 @@ export default async function installPackages(
   spinner.start(
     `Running ${chalk.greenBright(
       `\`${manager} install\``,
-    )}. This may take a bit...`,
+    )} in ${execDir}. This may take a bit...`,
   );
 
   if (!manager) {
@@ -23,7 +23,7 @@ export default async function installPackages(
     await execa(`${manager.toLowerCase()} install`, {
       cwd: `${process.cwd()}/${execDir}`,
     });
-    spinner.succeed(`Installed packages.`);
+    spinner.succeed(`Installed packages in ${execDir}.`);
   } catch (e) {
     spinner.stopAndPersist();
     throw Error(
