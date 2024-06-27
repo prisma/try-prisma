@@ -3,11 +3,11 @@
 
   ![readme-try-prisma](https://user-images.githubusercontent.com/18456526/202004157-e7c97399-1669-4d80-899c-537e09758214.png)
   
-  [![Tests](https://github.com/sabinadams/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/test.yml)
-  [![Linting](https://github.com/sabinadams/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/lint.yml)
+  [![Tests](https://github.com/prisma/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/test.yml)
+  [![Linting](https://github.com/prisma/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/lint.yml)
 </div>
 
-`try-prisma` is a CLI tool that helps you easily get up and running with any project in the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
+`try-prisma` is a CLI tool that helps you easily get up and running with any project from the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
 
 These projects are meant to be playgrounds for you to test integrations and features, _not production-ready boilerplates or templates_.
 
@@ -35,17 +35,17 @@ The options are as follows:
 
 |    Option    | Alias |      Arguments       |        Default        | Description                                                                                                                                                         |
 | :----------: | :---: | :------------------: | :-------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--install`  |  -i   | Boolean _(optional)_ |        `false`        | Specifies you would like to install npm packages automatically after creating the project. You can also specify which package manager to use [npm, yarn, or pnpm]   |
-|   `--name`   |  -n   |                      | Selected project name | Name of resulting directory.                                                                                                                                        |
+| `--install`  |  -i   | Boolean | String _(optional)_  |        `false`        | Specifies if you would like to install npm packages automatically after creating the project. You can also specify which package manager to use: `npm`, `yarn`, or `pnpm`   |
+|   `--name`   |  -n   |                      | Name of the selected template | Defines the name of the resulting directory.                                                                                                                                        |
 |   `--path`   |  -p   |                      |          `.`          | Path to the directory where the new folder should be created.                                                                                                       |
-| `--template` |  -t   |                      |          n/a          | Specifies which example project would you like to start off with.                                                                                                   |
-| `--vscode`   |  -v   | Boolean _(optional)_ |        `false`        | Adds a `.vscode` folder with a `extensions.json` file suggesting the [Prisma VS Code extension](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma). |
+| `--template` |  -t   |                      |          n/a          | Specifies which example project you would like to start off with.                                                                                                   |
+| `--vscode`   |  -v   | Boolean _(optional)_ |        `false`        | Adds a `.vscode` folder with an `extensions.json` file suggesting the [Prisma VS Code extension](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma). |
 
 ## Examples
 
 ### Selecting a template and installing packages
 
-You would like to use the template named `typescript/grpc`, install packages automatically:
+You would like to use the template named `typescript/grpc`, and install packages automatically:
 
 ```sh
 npx try-prisma -t typescript/grpc --install
