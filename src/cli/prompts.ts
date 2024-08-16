@@ -53,6 +53,10 @@ const selectORMorPDP = async (): Promise<string> => {
         name: "Prisma Pulse",
         value: "pulse",
       },
+      {
+        name: "Prisma Optimizer",
+        value: "optimize",
+      }
     ],
   });
 
