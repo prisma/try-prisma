@@ -18,7 +18,7 @@
     "format:check": "prettier --check --plugin-search-dir=. \"**/*.{ts,tsx}\"",
     "lint": "eslint **/*.ts",
     "lint:fix": "eslint **/*.ts --fix",
-    "check": " npm run format:check && npm run lint && npm run test",
+    "check": "npm run format:check && npm run lint && npm run test",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui"
