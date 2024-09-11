@@ -35,6 +35,13 @@ const main = async () => {
         );
       }
 
+      if (cli.args.template.includes("optimize/starter")) {
+        await installPackages(
+          input.pkgMgr,
+          `${input.path}/${input.name}`,
+        );
+      }
+
       if (
         cli.args.template.includes("product-search-with-typesense") ||
         cli.args.template.includes("rest-nextjs-express")
@@ -75,8 +82,10 @@ const main = async () => {
   logger.success(`
     ${chalk.bold(`The project is good to go! Next steps:`)}
     ${"Please follow the instructions in the project README to run it:"}
-    ${chalk.bold(`https://github.com/prisma/prisma-examples/tree/latest/${input.template}`)}
-    `)
+    ${chalk.bold(
+      `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
+    )}
+    `);
 
   // } else {
   //   logger.success(`
