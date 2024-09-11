@@ -34,16 +34,11 @@ const main = async () => {
           `${input.path}/${input.name}/server`,
         );
       }
-      
+
       if (cli.args.template.includes("optimize/starter")) {
         await installPackages(
           input.pkgMgr,
-          `${input.path}/${input.name}/packages/client`,
-        );
-
-        await installPackages(
-          input.pkgMgr,
-          `${input.path}/${input.name}/packages/server`,
+          `${input.path}/${input.name}`,
         );
       }
 
