@@ -30,26 +30,30 @@ export default async function getProjects() {
         return { ...prev, [curr.path]: [] };
       }
     }, {});
-  
+
   for (const key in mergedData) {
     if (!mergedData[key].includes("package.json")) {
       delete mergedData[key];
     }
   }
 
-  const projectsWithSubfolders:string[] = []
+  const projectsWithSubfolders: string[] = [];
 
-  const paths = Object.keys(mergedData).map(item => {
-    const folders = item.split('/');
-    
-    if(folders.length >= 3) {
-      projectsWithSubfolders.push(folders[1])
+  const paths = Object.keys(mergedData).map((item) => {
+    const folders = item.split("/");
+    if (folders.length >= 3) {
+      if (item.includes("optimize")) {
+        projectsWithSubfolders.push(folders[1]);
+        return folders.slice(0, 2).join("/")
+      } else {
+        projectsWithSubfolders.push(folders[1]);
+      }
     }
 
-    return folders.length >= 3 ? folders.slice(0, -1).join('/') : item;
+    return folders.length >= 3 ? folders.slice(0, -1).join("/") : item;
   });
 
   const uniquePaths = Array.from(new Set(paths)).sort();
-  
+
   return [uniquePaths, projectsWithSubfolders];
 }
