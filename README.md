@@ -5,6 +5,7 @@
   
   [![Tests](https://github.com/prisma/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/test.yml)
   [![Linting](https://github.com/prisma/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/lint.yml)
+
 </div>
 
 `try-prisma` is a CLI tool that helps you easily get up and running with any project from the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
