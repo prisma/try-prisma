@@ -47,7 +47,7 @@ describe("Input Collector", () => {
         name: "projectName",
         help: false,
         path: "lskdjf",
-        folder: "javascript",
+        folder: "orm",
         anonymous: false,
         vscode: false,
       });

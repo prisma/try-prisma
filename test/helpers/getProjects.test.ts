@@ -83,11 +83,11 @@ describe("Get Projects", () => {
       json: () => ({
         tree: [
           {
-            path: "javascript",
+            path: "typescript",
             type: "tree",
           },
           {
-            path: "javascript/package.json",
+            path: "typescript/package.json",
             type: "blob",
           },
         ],
@@ -96,7 +96,7 @@ describe("Get Projects", () => {
     const data = await getProjects();
 
     expect(data[0].length).toBe(1);
-    expect(data[0]).toContain("javascript");
+    expect(data[0]).toContain("typescript");
   });
 
   it("Should return multiple valid projects", async () => {
@@ -105,11 +105,11 @@ describe("Get Projects", () => {
       json: () => ({
         tree: [
           {
-            path: "javascript",
+            path: "accelerate",
             type: "tree",
           },
           {
-            path: "javascript/package.json",
+            path: "accelerate/package.json",
             type: "blob",
           },
           {
@@ -127,7 +127,7 @@ describe("Get Projects", () => {
     console.log(data[0])
     expect(data[0].length).toBe(2);
     expect(data[0]).toContain("typescript");
-    expect(data[0]).toContain("javascript");
+    expect(data[0]).toContain("accelerate");
   });
 
   it("Should return valid projects and filter bad projects", async () => {
