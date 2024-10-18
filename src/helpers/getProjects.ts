@@ -9,7 +9,7 @@ export default async function getProjects() {
 
   if (result.status !== 200) {
     throw new Error(
-      `Something went wrong when fetching the available projects from prisma/prisma-examples. Got status code ${status}`,
+      `Something went wrong when fetching the available projects from prisma/prisma-examples. Got status code ${result.status}`,
     );
   }
 
