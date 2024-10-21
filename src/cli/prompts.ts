@@ -13,7 +13,7 @@ const selectStarterOrExample = async (): Promise<string> => {
     name: "starter",
     choices: [
       {
-        name: "Prisma Starter (Recommended)\n  The Prisma Starter is a pre-configured project that includes Prisma ORM, Prisma Accelerate, and Prisma Pulse.",
+        name: `Prisma Starter (Recommended)\n\xa0\xa0➡ ${chalk.gray("The Prisma Starter is pre-configured with Prisma ORM, Accelerate, Pulse, and a Prisma Postgres database.")}`,
         value: "starter",
       },
       {
