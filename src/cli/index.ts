@@ -16,9 +16,9 @@ export default class Cli {
   async initialize() {
     // Grab projects
     const result = await getProjects();
-    
-    this.projects = result?.[0] ?? []
-    this.projectsWithSubfolders = result?.[1] ?? []
+
+    this.projects = result?.[0] ?? [];
+    this.projectsWithSubfolders = result?.[1] ?? [];
 
     // Parse CLI arguments
     const cliArgs = Command.parameters(parameters).parse();
@@ -71,10 +71,15 @@ export default class Cli {
 
     // Collect user input
     if (!this.args.folder.length) {
-      const projects = await prompts.selectORMorPDP()
-      if( projects !== "orm" ) {
+      const projects = await prompts.selectORMorPDP();
+      if (projects === "databases") {
         this.args.folder = projects;
-      } else {
+        this.args.template = "databases/prisma-postgres";
+      }
+      else if (projects !== "orm") {
+        this.args.folder = projects;
+      }
+      else {
         this.args.folder = await prompts.getRootDir();
       }
       this.projects = this.projects.filter((project) =>
@@ -95,8 +100,11 @@ export default class Cli {
     }
 
     if (!this.args.name.length) {
+      const defaultName = this.args.template === "databases/prisma-postgres" ?
+        "hello-prisma" :
+        this.args.template?.replace("/", "_");
       this.args.name = await prompts.getProjectName(
-        this.args.template?.replace("/", "_"),
+        defaultName,
       );
     }
 

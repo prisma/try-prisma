@@ -21,4 +21,5 @@ export default {
     .default(false)
     .describe("Should this invocation be recorded with Prisma's analytics?"),
   "v vscode": z.boolean().default(false).describe("Are you using VSCode?"),
+  "c connection-url": z.string().optional().describe("The connection URL of your database.")
 };
