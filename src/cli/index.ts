@@ -64,6 +64,23 @@ export default class Cli {
     }
   }
 
+  async getProductFolder(): Promise<void> {
+    if (this.args.folder.length) return
+    const starter = await prompts.selectStarterOrExample()
+    if (starter === "starter") {
+      this.args.folder = PRISMA_STARTER_TEMPLATE.split("/")[0]
+      this.args.template = PRISMA_STARTER_TEMPLATE
+      return
+    } else {
+      const projects = await prompts.selectORMorPDP()
+      if (projects !== "orm") {
+        this.args.folder = projects
+      } else {
+        this.args.folder = await prompts.getRootDir()
+      }
+    }
+  }
+
   async collect() {
     // Load the list of available templates
     const spinner = ora();
@@ -72,22 +89,14 @@ export default class Cli {
     spinner.succeed(`Loaded ${this.projects.length} templates`);
 
     // Collect user input
-    if (!this.args.folder.length) {
-      const projects = await prompts.selectORMorPDP()
-      if (projects === "prisma-starter") {
-        this.args.folder = PRISMA_STARTER_TEMPLATE.split("/")[0];
-        this.args.template = PRISMA_STARTER_TEMPLATE;
-      } else if (projects !== "orm") {
-        this.args.folder = projects;
-      } else {
-        this.args.folder = await prompts.getRootDir();
-      }
+    await this.getProductFolder()
 
-      this.projects = this.projects.filter((project) =>
-        project.startsWith(this.args.folder),
-      );
-    }
+    // filter projects based on folder
+    this.projects = this.projects.filter((project) =>
+      project.startsWith(this.args.folder),
+    );
 
+    // select template from list of projects
     if (!this.args.template.length) {
       this.args.template = await prompts.getTemplate(this.projects);
     }
