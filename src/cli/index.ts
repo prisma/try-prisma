@@ -19,8 +19,8 @@ export default class Cli {
     // Grab projects
     const result = await getProjects();
 
-    this.projects = result?.[0] ?? [];
-    this.projectsWithSubfolders = result?.[1] ?? [];
+    this.projects = result?.[0] ?? []
+    this.projectsWithSubfolders = result?.[1] ?? []
 
     // Parse CLI arguments
     const cliArgs = Command.parameters(parameters).parse();
@@ -73,17 +73,16 @@ export default class Cli {
 
     // Collect user input
     if (!this.args.folder.length) {
-      const projects = await prompts.selectORMorPDP();
+      const projects = await prompts.selectORMorPDP()
       if (projects === "prisma-starter") {
         this.args.folder = PRISMA_STARTER_TEMPLATE.split("/")[0];
         this.args.template = PRISMA_STARTER_TEMPLATE;
-      }
-      else if (projects !== "orm") {
+      } else if (projects !== "orm") {
         this.args.folder = projects;
-      }
-      else {
+      } else {
         this.args.folder = await prompts.getRootDir();
       }
+
       this.projects = this.projects.filter((project) =>
         project.startsWith(this.args.folder),
       );
@@ -102,7 +101,9 @@ export default class Cli {
     }
 
     if (!this.args.name.length) {
-      const defaultName = this.args.template === PRISMA_STARTER_TEMPLATE ? "hello-prisma" : this.args.template?.replace("/", "_");
+      const defaultName = this.args.template === PRISMA_STARTER_TEMPLATE
+        ? "hello-prisma"
+        : this.args.template?.replace("/", "_");
       this.args.name = await prompts.getProjectName(defaultName);
     }
 

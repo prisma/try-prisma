@@ -12,7 +12,6 @@
   },
   "scripts": {
     "dev": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.js\"",
-    "dev2": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.js --\"",
     "build": "tsup src/index.ts --format esm --clean --sourcemap --minify --metafile",
     "local": "npm run build && npm i -g && npx try-prisma",
     "format": "prettier --write --plugin-search-dir=. \"**/*.{ts,tsx}\"",
