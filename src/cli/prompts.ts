@@ -129,22 +129,7 @@ const getProjectName = async (defaultValue = ""): Promise<string> => {
 };
 
 const getProjectDirectory = async (): Promise<string> => {
-  const { dirpath } = await inquirer.prompt({
-    type: "input",
-    message: "Where should the new folder be created?",
-    name: "dirpath",
-    default: ".",
-    validate(answer) {
-      try {
-        validate.directory(answer);
-      } catch (e) {
-        console.log("\n✗ " + chalk.red(e.message))
-        return false;
-      }
-      return true;
-    },
-  });
-  return dirpath;
+  return "."
 };
 
 export default {
