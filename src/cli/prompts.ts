@@ -6,6 +6,25 @@ import SearchList from "inquirer-search-list";
 
 inquirer.registerPrompt("search-list", SearchList);
 
+const selectStarterOrExample = async (): Promise<string> => {
+  const { starter } = await inquirer.prompt({
+    type: "list",
+    message: `How would you like to start your new project?`,
+    name: "starter",
+    choices: [
+      {
+        name: `Prisma Starter (Recommended)\n\xa0\xa0➡ ${chalk.gray("The Prisma Starter is pre-configured with Prisma ORM, Accelerate, Pulse, and a Prisma Postgres database.")}`,
+        value: "starter",
+      },
+      {
+        name: "Explore other examples",
+        value: "example",
+      },
+    ],
+  });
+  return starter;
+}
+
 const getTemplate = async (projects: string[]): Promise<string> => {
   logger.success(
     `\nDon't see what you're looking for? Request a new template here:\n\xa0\xa0➡ ${chalk.underline.gray(
@@ -41,6 +60,10 @@ const selectORMorPDP = async (): Promise<string> => {
     message: `Which examples do you want to explore?`,
     name: "start",
     choices: [
+      {
+        name: "Prisma Starter (Recommended)",
+        value: "prisma-starter",
+      },
       {
         name: "Prisma ORM",
         value: "orm",
@@ -148,6 +171,7 @@ const getProjectDirectory = async (): Promise<string> => {
 };
 
 export default {
+  selectStarterOrExample,
   selectORMorPDP,
   getInstallSelection,
   getProjectDirectory,
