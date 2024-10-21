@@ -7,6 +7,8 @@ import { Command } from "@molt/command";
 import chalk from "chalk";
 import ora from "ora";
 
+const PRISMA_STARTER_TEMPLATE = "pulse/starter";
+
 export default class Cli {
   instructions: string[] = [];
   projects: string[] = [];
@@ -72,9 +74,9 @@ export default class Cli {
     // Collect user input
     if (!this.args.folder.length) {
       const projects = await prompts.selectORMorPDP();
-      if (projects === "databases") {
-        this.args.folder = projects;
-        this.args.template = "databases/prisma-postgres";
+      if (projects === "prisma-starter") {
+        this.args.folder = PRISMA_STARTER_TEMPLATE.split("/")[0];
+        this.args.template = PRISMA_STARTER_TEMPLATE;
       }
       else if (projects !== "orm") {
         this.args.folder = projects;
@@ -100,12 +102,8 @@ export default class Cli {
     }
 
     if (!this.args.name.length) {
-      const defaultName = this.args.template === "databases/prisma-postgres" ?
-        "hello-prisma" :
-        this.args.template?.replace("/", "_");
-      this.args.name = await prompts.getProjectName(
-        defaultName,
-      );
+      const defaultName = this.args.template === PRISMA_STARTER_TEMPLATE ? "hello-prisma" : this.args.template?.replace("/", "_");
+      this.args.name = await prompts.getProjectName(defaultName);
     }
 
     if (!this.args.path.length) {

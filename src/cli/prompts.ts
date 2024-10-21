@@ -43,7 +43,7 @@ const selectORMorPDP = async (): Promise<string> => {
     choices: [
       {
         name: "Prisma Starter (Recommended)",
-        value: "databases",
+        value: "prisma-starter",
       },
       {
         name: "Prisma ORM",
