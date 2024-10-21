@@ -75,7 +75,7 @@ export default async function download(options: CliInput): Promise<void> {
       }),
     );
     spinner.succeed(
-      `Downloaded and extracted the ${options.template} project.\n`,
+      `Downloaded and extracted the ${options.template} project in ${options.path}/${options.name}.\n`,
     );
   } catch (e) {
     spinner.stopAndPersist();
