@@ -76,7 +76,11 @@ export default class Cli {
       if (projects !== "orm") {
         this.args.folder = projects
       } else {
-        this.args.folder = await prompts.getRootDir()
+        // hack from #DA-1540
+        this.args.folder = 'typescript'
+        if (this.projects.filter((project) => project.startsWith(this.args.folder)).length === 0) {
+          this.args.folder = 'orm'
+        }
       }
     }
   }

@@ -47,8 +47,8 @@ describe("Input Collector", () => {
         pkgMgr: "npm",
         name: "projectName",
         help: false,
+        folder: "orm",
         path: ".",
-        folder: "javascript",
         anonymous: false,
         vscode: false,
       });

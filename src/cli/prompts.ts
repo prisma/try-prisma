@@ -81,30 +81,6 @@ const selectORMorPDP = async (): Promise<string> => {
   return start;
 };
 
-const getRootDir = async (): Promise<string> => {
-  logger.success(
-    `\nThese options correspond to the root directories in the prisma-examples repository:\n`,
-  );
-  const { rootDir } = await inquirer.prompt({
-    // @ts-expect-error Inquirer doesn't register the type.
-    type: "search-list",
-    message: `Which language do you want to use?`,
-    name: "rootDir",
-    choices: [
-      {
-        name: "TypeScript",
-        value: "typescript",
-      },
-      {
-        name: "JavaScript",
-        value: "javascript",
-      },
-    ],
-  });
-
-  return rootDir;
-};
-
 const getInstallSelection = async (): Promise<boolean> => {
   const { packages } = await inquirer.prompt({
     type: "confirm",
@@ -158,5 +134,4 @@ export default {
   getProjectName,
   selectManager,
   getTemplate,
-  getRootDir,
 };
