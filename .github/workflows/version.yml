@@ -7,7 +7,7 @@ on:
 
 jobs:
   bump-version:
-    name: 'Bump Version on main'
+    name: 'Bump version and publish'
     # Prefix with "MAJOR:" to bump major
     # "MINOR:" or "FEAT:" bump minor
     # "PRE-ALPHA:", "PRE-BETA:", "PRE-RC:" bump pre-release version
@@ -25,7 +25,8 @@ jobs:
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
         with:
-          tag-prefix: 'v'
+          skip-commit:    'true'
+          skip-tag:       'true'
           minor-wording:  'MINOR,FEAT'
           major-wording:  'MAJOR,BREAKING'
           patch-wording:  'PATCH,FIXES'
