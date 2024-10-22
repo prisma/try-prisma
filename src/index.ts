@@ -81,22 +81,11 @@ const main = async () => {
 
   logger.success(`
     ${chalk.bold(`The project is good to go! Next steps:`)}
-    ${"Please follow the instructions in the project README to run it:"}
-    ${chalk.bold(
-      `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
-    )}
+    ${chalk.bold(`1. Navigate into ${input.path}/${input.name} to begin.`)}
+    ${chalk.bold("2. Refer to the project README for detailed instructions on running the project:")}
+    ${"   "+chalk.bold.underline.blue(`https://github.com/prisma/prisma-examples/tree/latest/${input.template}`)}
     `);
 
-  // } else {
-  //   logger.success(`
-  //   ${chalk.bold(`The project is good to go! Next steps:`)}
-  //   ${cli.instructions.join("")}
-  //   For more information about this project, visit:
-  //   ${chalk.gray.underline(
-  //     `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
-  //   )}
-  // `);
-  // }
   logger.success(
     `If you have any feedback about this specific template, we want to hear it!\nSubmit any feedback here: ${chalk.gray.underline(
       "https://pris.ly/prisma-examples-feedback",

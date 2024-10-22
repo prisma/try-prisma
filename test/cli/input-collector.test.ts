@@ -8,6 +8,7 @@ vi.mock("../../src/helpers/getProjects", () => ({
 
 vi.mock("../../src/cli/prompts", () => ({
   default: {
+    selectStarterOrExample: async () => "example",
     getTemplate: async () => "template",
     getInstallSelection: async () => true,
     selectManager: async () => "npm",
@@ -46,8 +47,8 @@ describe("Input Collector", () => {
         pkgMgr: "npm",
         name: "projectName",
         help: false,
-        path: "lskdjf",
         folder: "orm",
+        path: ".",
         anonymous: false,
         vscode: false,
       });
