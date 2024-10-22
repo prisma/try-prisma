@@ -15,7 +15,6 @@ export default {
     .describe("Automatically install packages?")
     .default(false),
   "n name": z.string().default("").describe("Resulting directory's name"),
-  // "p path": z.string().default(".").describe("Resulting directory's location"),
   "a anonymous": z
     .boolean()
     .default(false)
