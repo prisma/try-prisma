@@ -23,10 +23,6 @@ npx try-prisma
 
 This will walk you through a set of interactive options _(detailed below)_ to help you set up your project.
 
-<div align="center">
-<img width="500" alt="CleanShot 2022-08-31 at 13 05 29@2x" src="https://user-images.githubusercontent.com/18456526/202004719-6ceaf535-9a56-42d7-821a-525de0517efe.png">
-</div>
-
 ## Arguments
 
 You can _optionally_ provide arguments to the `npx try-prisma` command as an alternative to (or in combination with) the interactive experience.
@@ -37,7 +33,6 @@ The options are as follows:
 | :----------: | :---: | :------------------: | :-------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--install`  |  -i   | Boolean | String _(optional)_  |        `false`        | Specifies if you would like to install npm packages automatically after creating the project. You can also specify which package manager to use: `npm`, `yarn`, or `pnpm`   |
 |   `--name`   |  -n   |                      | Name of the selected template | Defines the name of the resulting directory.                                                                                                                                        |
-|   `--path`   |  -p   |                      |          `.`          | Path to the directory where the new folder should be created.                                                                                                       |
 | `--template` |  -t   |                      |          n/a          | Specifies which example project you would like to start off with.                                                                                                   |
 | `--vscode`   |  -v   | Boolean _(optional)_ |        `false`        | Adds a `.vscode` folder with an `extensions.json` file suggesting the [Prisma VS Code extension](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma). |
 
@@ -61,12 +56,12 @@ If you wanted to use [`yarn`](https://yarnpkg.com/) to install the packages auto
 npx try-prisma -i yarn
 ```
 
-### Selecting a directory and folder name
+### Selecting a folder name
 
-Below, you would create a new project at `../../projects/new_folder`:
+You can create a new project in the current directory by executing the following:
 
 ```sh
-npx try-prisma -p ../../projects -n new_folder
+npx try-prisma -n new_folder
 ```
 
 ### All of the options!
@@ -74,5 +69,5 @@ npx try-prisma -p ../../projects -n new_folder
 Interactive terminal who?? Use all the options!
 
 ```npx
-npx try-prisma -t typescript/grpc -i pnpm -n my_project -p ./projects
+npx try-prisma -t typescript/grpc -i pnpm -n my_project
 ```
