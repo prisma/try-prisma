@@ -6,6 +6,25 @@ import SearchList from "inquirer-search-list";
 
 inquirer.registerPrompt("search-list", SearchList);
 
+const selectStarterOrExample = async (): Promise<string> => {
+  const { starter } = await inquirer.prompt({
+    type: "list",
+    message: `How would you like to start your new project?`,
+    name: "starter",
+    choices: [
+      {
+        name: `Prisma Starter (Recommended)\n\xa0\xa0- ${chalk.gray("The Prisma Starter is pre-configured with Prisma ORM, Accelerate, Pulse, and a Prisma Postgres database.")}`,
+        value: "starter",
+      },
+      {
+        name: "Explore other examples",
+        value: "example",
+      },
+    ],
+  });
+  return starter;
+}
+
 const getTemplate = async (projects: string[]): Promise<string> => {
   logger.success(
     `\nDon't see what you're looking for? Request a new template here:\n\xa0\xa0➡ ${chalk.underline.gray(
@@ -36,25 +55,24 @@ const selectORMorPDP = async (): Promise<string> => {
     `\nThese options correspond to the root directories in the prisma-examples repository:\n`,
   );
   const { start } = await inquirer.prompt({
-    // @ts-expect-error Inquirer doesn't register the type.
-    type: "search-list",
-    message: `Which Prisma product would you like to explore?`,
+    type: "list",
+    message: `Which Prisma examples would you like to explore?`,
     name: "start",
     choices: [
       {
-        name: "Prisma ORM (Define Prisma schema and run queries)",
+        name: `Prisma ORM\n\xa0\xa0- ${chalk.gray("Define Prisma schema and run queries")}`,
         value: "orm",
       },
       {
-        name: "Prisma Accelerate (Perform caching and connection pooling)",
+        name: `Prisma Accelerate\n\xa0\xa0- ${chalk.gray("Perform caching and connection pooling")}`,
         value: "accelerate",
       },
       {
-        name: "Prisma Pulse (Monitor and react to real-time database changes)",
+        name: `Prisma Pulse\n\xa0\xa0- ${chalk.gray("Monitor and react to real-time database changes")}`,
         value: "pulse",
       },
       {
-        name: "Prisma Optimize (Analyze and improve query performance)",
+        name: `Prisma Optimize\n\xa0\xa0- ${chalk.gray("Analyze and improve query performance")}`,
         value: "optimize",
       }
     ],
@@ -133,6 +151,7 @@ const getProjectDirectory = async (): Promise<string> => {
 };
 
 export default {
+  selectStarterOrExample,
   selectORMorPDP,
   getInstallSelection,
   getProjectDirectory,

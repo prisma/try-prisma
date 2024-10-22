@@ -7,6 +7,8 @@ import { Command } from "@molt/command";
 import chalk from "chalk";
 import ora from "ora";
 
+const PRISMA_STARTER_TEMPLATE = "databases/prisma-postgres";
+
 export default class Cli {
   instructions: string[] = [];
   projects: string[] = [];
@@ -16,7 +18,7 @@ export default class Cli {
   async initialize() {
     // Grab projects
     const result = await getProjects();
-    
+
     this.projects = result?.[0] ?? []
     this.projectsWithSubfolders = result?.[1] ?? []
 
@@ -62,6 +64,23 @@ export default class Cli {
     }
   }
 
+  async getProductFolder(): Promise<void> {
+    if (this.args.folder.length) return
+    const starter = await prompts.selectStarterOrExample()
+    if (starter === "starter") {
+      this.args.folder = PRISMA_STARTER_TEMPLATE.split("/")[0]
+      this.args.template = PRISMA_STARTER_TEMPLATE
+      return
+    } else {
+      const projects = await prompts.selectORMorPDP()
+      if (projects !== "orm") {
+        this.args.folder = projects
+      } else {
+        this.args.folder = await prompts.getRootDir()
+      }
+    }
+  }
+
   async collect() {
     // Load the list of available templates
     const spinner = ora();
@@ -70,18 +89,14 @@ export default class Cli {
     spinner.succeed(`Loaded ${this.projects.length} templates`);
 
     // Collect user input
-    if (!this.args.folder.length) {
-      const projects = await prompts.selectORMorPDP()
-      if( projects !== "orm" ) {
-        this.args.folder = projects;
-      } else {
-        this.args.folder = await prompts.getRootDir();
-      }
-      this.projects = this.projects.filter((project) =>
-        project.startsWith(this.args.folder),
-      );
-    }
+    await this.getProductFolder()
 
+    // filter projects based on folder
+    this.projects = this.projects.filter((project) =>
+      project.startsWith(this.args.folder),
+    );
+
+    // select template from list of projects
     if (!this.args.template.length) {
       this.args.template = await prompts.getTemplate(this.projects);
     }
@@ -95,9 +110,10 @@ export default class Cli {
     }
 
     if (!this.args.name.length) {
-      this.args.name = await prompts.getProjectName(
-        this.args.template?.replace("/", "_"),
-      );
+      const defaultName = this.args.template === PRISMA_STARTER_TEMPLATE
+        ? "hello-prisma"
+        : this.args.template?.replace("/", "_");
+      this.args.name = await prompts.getProjectName(defaultName);
     }
 
     if (!this.args.path.length) {
