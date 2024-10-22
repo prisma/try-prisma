@@ -7,7 +7,7 @@ import { Command } from "@molt/command";
 import chalk from "chalk";
 import ora from "ora";
 
-const PRISMA_STARTER_TEMPLATE = "pulse/starter";
+const PRISMA_STARTER_TEMPLATE = "databases/prisma-postgres";
 
 export default class Cli {
   instructions: string[] = [];
