@@ -24,7 +24,7 @@ export default {
   rootDir(path: string) {
     if (!EXAMPLES_DIR_ACCEPT.includes(path)) {
       throw new Error(
-        "Invalid template. Please choose a template from the `javascript`, `typescript`, `accelerate`, `pulse`, or `optimize` directories in the prisma/prisma-examples repository.",
+        "Invalid template. Please choose a template from the `typescript`, `databases`, `accelerate`, `pulse`, or `optimize` directories in the prisma/prisma-examples repository.",
       );
     }
   },
