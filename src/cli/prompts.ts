@@ -38,23 +38,23 @@ const selectORMorPDP = async (): Promise<string> => {
   const { start } = await inquirer.prompt({
     // @ts-expect-error Inquirer doesn't register the type.
     type: "search-list",
-    message: `Which examples do you want to explore?`,
+    message: `Which Prisma product would you like to explore?`,
     name: "start",
     choices: [
       {
-        name: "Prisma ORM",
+        name: "Prisma ORM (Define Prisma schema and run queries)",
         value: "orm",
       },
       {
-        name: "Prisma Accelerate",
+        name: "Prisma Accelerate (Perform caching and connection pooling)",
         value: "accelerate",
       },
       {
-        name: "Prisma Pulse",
+        name: "Prisma Pulse (Monitor and react to real-time database changes)",
         value: "pulse",
       },
       {
-        name: "Prisma Optimize",
+        name: "Prisma Optimize (Analyze and improve query performance)",
         value: "optimize",
       }
     ],
@@ -92,7 +92,7 @@ const getInstallSelection = async (): Promise<boolean> => {
     type: "confirm",
     message: `Should we automatically install packages for you?`,
     name: "packages",
-    default: false,
+    default: true,
   });
   return Boolean(packages);
 };
@@ -111,7 +111,7 @@ const selectManager = async (): Promise<"npm" | "yarn" | "pnpm"> => {
 const getProjectName = async (defaultValue = ""): Promise<string> => {
   const { dirname } = await inquirer.prompt({
     type: "input",
-    message: "What should the project be named?",
+    message: "What should the project folder be named?",
     name: "dirname",
     default: defaultValue,
     filter: (input) => input.replace("/", "_").trim(),
@@ -129,22 +129,7 @@ const getProjectName = async (defaultValue = ""): Promise<string> => {
 };
 
 const getProjectDirectory = async (): Promise<string> => {
-  const { dirpath } = await inquirer.prompt({
-    type: "input",
-    message: "Where should the new folder be created?",
-    name: "dirpath",
-    default: ".",
-    validate(answer) {
-      try {
-        validate.directory(answer);
-      } catch (e) {
-        console.log("\n✗ " + chalk.red(e.message))
-        return false;
-      }
-      return true;
-    },
-  });
-  return dirpath;
+  return "."
 };
 
 export default {

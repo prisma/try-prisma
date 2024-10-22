@@ -46,7 +46,7 @@ describe("Input Collector", () => {
         pkgMgr: "npm",
         name: "projectName",
         help: false,
-        path: "lskdjf",
+        path: ".",
         folder: "javascript",
         anonymous: false,
         vscode: false,
