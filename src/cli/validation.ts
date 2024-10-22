@@ -3,6 +3,12 @@ import fs from "fs";
 
 export default {
   directoryName(name: string) {
+    // Check for "." or ".." or "./" or "../" or any variations like "./folder"
+    if (name === '.' || name === '..' || name.startsWith('./') || name.startsWith('../') || name.startsWith('._') || name.startsWith('.')) {
+      throw new Error("Sorry, that name is invalid.");
+    }
+
+    // Regex for invalid characters and reserved names
     const re = /[<>:"/\\|?*]|^(?:aux|con|clock\$|nul|prn|com[1-9]|lpt[1-9])$/i;
     if (re.test(name)) {
       throw new Error("Sorry, that name is invalid.");
