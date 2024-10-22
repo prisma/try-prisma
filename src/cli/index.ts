@@ -92,7 +92,7 @@ export default class Cli {
     spinner.start();
     spinner.succeed(`Loaded ${this.projects.length} templates`);
 
-    // Collect user inputs
+    // Collect user input
     await this.getProductFolder()
 
     // filter projects based on folder
