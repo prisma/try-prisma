@@ -27,7 +27,7 @@ export default class Cli {
     // Massage & apply the data
     cliArgs.name = cliArgs.name ? cliArgs.name.replace("/", "_").trim() : "";
     const folder = cliArgs.template ? cliArgs.template.split("/")[0] : "";
-    this.args = { ...cliArgs, folder, install: false, pkgMgr: "" };
+    this.args = { ...cliArgs, path: ".", folder, install: false, pkgMgr: "" };
     this.extractManualIntallInstructions(cliArgs.install);
     this.validateUserInput();
   }
