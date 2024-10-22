@@ -1,11 +1,18 @@
 import { EXAMPLES_DIR_ACCEPT } from "../constants";
 import fs from "fs";
+import path from "path"
 
 export default {
   directoryName(name: string) {
     // Check for "." or ".." or "./" or "../" or any variations like "./folder"
     if (name === '.' || name === '..' || name.startsWith('./') || name.startsWith('../') || name.startsWith('._') || name.startsWith('.')) {
       throw new Error("Sorry, that name is invalid.");
+    }
+
+    // Check if the name already exists as a file or directory in the current directory
+    const fullPath = path.join(process.cwd(), name);
+    if (fs.existsSync(fullPath)) {
+      throw new Error(`Sorry, a file or directory with the name "${name}" already exists.`);
     }
 
     // Regex for invalid characters and reserved names
