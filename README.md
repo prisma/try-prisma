@@ -40,10 +40,10 @@ The options are as follows:
 
 ### Selecting a template and installing packages
 
-You would like to use the template named `typescript/grpc`, and install packages automatically:
+You would like to use the template named `orm/grpc`, and install packages automatically:
 
 ```sh
-npx try-prisma -t typescript/grpc --install
+npx try-prisma -t orm/grpc --install
 ```
 
 In this scenario, you will still be prompted to input values for your preferred package manager and the name of the resulting folder.
@@ -69,5 +69,5 @@ npx try-prisma -n new_folder
 Interactive terminal who?? Use all the options!
 
 ```npx
-npx try-prisma -t typescript/grpc -i pnpm -n my_project
+npx try-prisma -t orm/grpc -i pnpm -n my_project
 ```

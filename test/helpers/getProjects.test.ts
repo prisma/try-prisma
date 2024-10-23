@@ -61,11 +61,11 @@ describe("Get Projects", () => {
       json: () => ({
         tree: [
           {
-            path: "javascript/README.md",
+            path: "orm/README.md",
             type: "blob",
           },
           {
-            path: "typescript/package.json",
+            path: "orm/package.json",
             type: "blob",
           },
         ],
@@ -74,7 +74,7 @@ describe("Get Projects", () => {
     const data = await getProjects();
 
     expect(data[0].length).toBe(1);
-    expect(data[0]).toContain("typescript");
+    expect(data[0]).toContain("orm");
   });
 
   it('Should work as expected with a "tree" type', async () => {
@@ -83,11 +83,11 @@ describe("Get Projects", () => {
       json: () => ({
         tree: [
           {
-            path: "typescript",
+            path: "orm",
             type: "tree",
           },
           {
-            path: "typescript/package.json",
+            path: "orm/package.json",
             type: "blob",
           },
         ],
@@ -96,7 +96,7 @@ describe("Get Projects", () => {
     const data = await getProjects();
 
     expect(data[0].length).toBe(1);
-    expect(data[0]).toContain("typescript");
+    expect(data[0]).toContain("orm");
   });
 
   it("Should return multiple valid projects", async () => {
@@ -113,11 +113,11 @@ describe("Get Projects", () => {
             type: "blob",
           },
           {
-            path: "typescript",
+            path: "orm",
             type: "tree",
           },
           {
-            path: "typescript/package.json",
+            path: "orm/package.json",
             type: "blob",
           },
         ],
@@ -126,7 +126,7 @@ describe("Get Projects", () => {
     const data = await getProjects();
     console.log(data[0])
     expect(data[0].length).toBe(2);
-    expect(data[0]).toContain("typescript");
+    expect(data[0]).toContain("orm");
     expect(data[0]).toContain("accelerate");
   });
 
@@ -144,11 +144,11 @@ describe("Get Projects", () => {
             type: "blob",
           },
           {
-            path: "typescript",
+            path: "orm",
             type: "tree",
           },
           {
-            path: "typescript/package.json",
+            path: "orm/package.json",
             type: "blob",
           },
         ],
@@ -157,6 +157,6 @@ describe("Get Projects", () => {
     const data = await getProjects();
 
     expect(data[0].length).toBe(1);
-    expect(data[0]).toContain("typescript");
+    expect(data[0]).toContain("orm");
   });
 });
