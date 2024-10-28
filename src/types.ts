@@ -7,4 +7,5 @@ export type CliInput = {
   vscode: boolean;
   path: string;
   folder: string;
+  databaseUrl: string;
 };

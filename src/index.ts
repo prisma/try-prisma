@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import fs from "node:fs"
+
 import CLI from "./cli";
 import download from "./helpers/download";
 import installPackages from "./helpers/installPackages";
@@ -55,6 +57,16 @@ const main = async () => {
           `${input.path}/${input.name}/backend`,
         );
       }
+    }
+  }
+
+  if (input.databaseUrl) {
+    fs.writeFileSync(`${input.path}/${input.name}/.env`, `DATABASE_URL="${input.databaseUrl}"\n`, { flag: "a" })
+    if (input.databaseUrl.startsWith("prisma://")) {
+      const queryParams = input.databaseUrl.split("?")[1]
+      const urlParams = new URLSearchParams(queryParams)
+      const apiKey = urlParams.get("api_key")
+      fs.writeFileSync(`${input.path}/${input.name}/.env`, `PULSE_API_KEY="${apiKey}"\n`, { flag: "a" })
     }
   }
 
