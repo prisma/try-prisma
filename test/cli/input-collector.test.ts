@@ -50,6 +50,7 @@ describe("Input Collector", () => {
         folder: "orm",
         path: ".",
         anonymous: false,
+        databaseUrl: "",
         vscode: false,
       });
     });
