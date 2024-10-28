@@ -1,10 +1,10 @@
+<div align=center>
 
-<div align=center>  
+![readme-try-prisma](https://user-images.githubusercontent.com/18456526/202004157-e7c97399-1669-4d80-899c-537e09758214.png)
 
-  ![readme-try-prisma](https://user-images.githubusercontent.com/18456526/202004157-e7c97399-1669-4d80-899c-537e09758214.png)
-  
-  [![Tests](https://github.com/prisma/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/test.yml)
-  [![Linting](https://github.com/prisma/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/lint.yml)
+[![Tests](https://github.com/prisma/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/test.yml)
+[![Linting](https://github.com/prisma/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/lint.yml)
+
 </div>
 
 `try-prisma` is a CLI tool that helps you easily get up and running with any project from the [`prisma/prisma-examples`](https://github.com/prisma/prisma-examples) repository.
@@ -29,12 +29,13 @@ You can _optionally_ provide arguments to the `npx try-prisma` command as an alt
 
 The options are as follows:
 
-|    Option    | Alias |      Arguments       |        Default        | Description                                                                                                                                                         |
-| :----------: | :---: | :------------------: | :-------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--install`  |  -i   | Boolean | String _(optional)_  |        `false`        | Specifies if you would like to install npm packages automatically after creating the project. You can also specify which package manager to use: `npm`, `yarn`, or `pnpm`   |
-|   `--name`   |  -n   |                      | Name of the selected template | Defines the name of the resulting directory.                                                                                                                                        |
-| `--template` |  -t   |                      |          n/a          | Specifies which example project you would like to start off with.                                                                                                   |
-| `--vscode`   |  -v   | Boolean _(optional)_ |        `false`        | Adds a `.vscode` folder with an `extensions.json` file suggesting the [Prisma VS Code extension](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma). |
+|      Option      | Alias |      Arguments       |            Default            | Description                                                                                                                                                          |
+| :--------------: | :---: | :------------------: | :---------------------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|   `--install`    |  -i   |       Boolean        |            `false`            |                                                                                                                                                                      | Specifies if you would like to install npm packages automatically after creating the project. You can also specify which package manager to use: `npm`, `yarn`, or `pnpm` |
+|     `--name`     |  -n   |                      | Name of the selected template | Defines the name of the resulting directory.                                                                                                                         |
+|   `--template`   |  -t   |                      |              n/a              | Specifies which example project you would like to start off with.                                                                                                    |
+| `--database-url` |  -d   |                      |              n/a              | Specifies the database URL you would like to use for the project.                                                                                                    |
+|    `--vscode`    |  -v   | Boolean _(optional)_ |            `false`            | Adds a `.vscode` folder with an `extensions.json` file suggesting the [Prisma VS Code extension](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma). |
 
 ## Examples
 
