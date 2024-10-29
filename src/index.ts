@@ -8,6 +8,7 @@ import logger from "./helpers/logger";
 import vscodeExtensionSuggestion from "./helpers/vscodeExtensionSuggestion";
 import chalk from "chalk";
 
+
 const main = async () => {
   const cli = new CLI();
   await cli.initialize();
@@ -62,7 +63,8 @@ const main = async () => {
 
   if (input.databaseUrl) {
     fs.writeFileSync(`${input.path}/${input.name}/.env`, `DATABASE_URL="${input.databaseUrl}"\n`, { flag: "a" })
-    if (input.databaseUrl.startsWith("prisma://")) {
+    
+    if (input.databaseUrl.startsWith("prisma://") || input.databaseUrl.startsWith("prisma+postgres://")) {
       const queryParams = input.databaseUrl.split("?")[1]
       const urlParams = new URLSearchParams(queryParams)
       const apiKey = urlParams.get("api_key")
