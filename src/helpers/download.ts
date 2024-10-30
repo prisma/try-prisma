@@ -27,7 +27,6 @@ export default async function download(options: CliInput): Promise<void> {
   });
 
   if (response.status !== 200) {
-
     // Something went wrong with the interceptor,
     // try fetching from GitHub directly ...
     response = await fetch(EXAMPLES_REPO_TAR, {
@@ -37,7 +36,7 @@ export default async function download(options: CliInput): Promise<void> {
     if (response.status !== 200) {
       spinner.stopAndPersist();
       throw new Error(
-        `Something went wrong when fetching prisma/prisma-examples. Received a status code ${response.status}.`
+        `Something went wrong when fetching prisma/prisma-examples. Received a status code ${response.status}.`,
       );
     }
   }

@@ -8,4 +8,11 @@ export const EXAMPLES_REPO_INTERCEPTOR = // "http://localhost:3000/api/intercept
   "https://www.try-prisma-analytics.com/api/interceptor";
 // "https://www.try-prisma-analytics.vercel.app/api/interceptor";
 
-export const EXAMPLES_DIR_ACCEPT = ["typescript", "databases", "orm", "accelerate", "pulse", "optimize"];
+export const EXAMPLES_DIR_ACCEPT = [
+  "typescript",
+  "databases",
+  "orm",
+  "accelerate",
+  "pulse",
+  "optimize",
+];

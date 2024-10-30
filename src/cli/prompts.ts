@@ -13,7 +13,9 @@ const selectStarterOrExample = async (): Promise<string> => {
     name: "starter",
     choices: [
       {
-        name: `Prisma Starter (Recommended)\n\xa0\xa0- ${chalk.gray("The Prisma Starter is pre-configured with Prisma ORM, Accelerate, Pulse, and a Prisma Postgres database.")}`,
+        name: `Prisma Starter (Recommended)\n\xa0\xa0- ${chalk.gray(
+          "The Prisma Starter is pre-configured with Prisma ORM, Accelerate, Pulse, and a Prisma Postgres database.",
+        )}`,
         value: "starter",
       },
       {
@@ -23,7 +25,7 @@ const selectStarterOrExample = async (): Promise<string> => {
     ],
   });
   return starter;
-}
+};
 
 const getTemplate = async (projects: string[]): Promise<string> => {
   logger.success(
@@ -60,21 +62,29 @@ const selectORMorPDP = async (): Promise<string> => {
     name: "start",
     choices: [
       {
-        name: `Prisma ORM\n\xa0\xa0- ${chalk.gray("Define Prisma schema and run queries")}`,
+        name: `Prisma ORM\n\xa0\xa0- ${chalk.gray(
+          "Define Prisma schema and run queries",
+        )}`,
         value: "orm",
       },
       {
-        name: `Prisma Accelerate\n\xa0\xa0- ${chalk.gray("Perform caching and connection pooling")}`,
+        name: `Prisma Accelerate\n\xa0\xa0- ${chalk.gray(
+          "Perform caching and connection pooling",
+        )}`,
         value: "accelerate",
       },
       {
-        name: `Prisma Pulse\n\xa0\xa0- ${chalk.gray("Monitor and react to real-time database changes")}`,
+        name: `Prisma Pulse\n\xa0\xa0- ${chalk.gray(
+          "Monitor and react to real-time database changes",
+        )}`,
         value: "pulse",
       },
       {
-        name: `Prisma Optimize\n\xa0\xa0- ${chalk.gray("Analyze and improve query performance")}`,
+        name: `Prisma Optimize\n\xa0\xa0- ${chalk.gray(
+          "Analyze and improve query performance",
+        )}`,
         value: "optimize",
-      }
+      },
     ],
   });
 
@@ -113,7 +123,7 @@ const getProjectName = async (defaultValue = ""): Promise<string> => {
       try {
         validate.directoryName(answer);
       } catch (e) {
-        console.log("\n✗ " + chalk.red(e.message))
+        console.log("\n✗ " + chalk.red(e.message));
         return false;
       }
       return true;
@@ -123,7 +133,7 @@ const getProjectName = async (defaultValue = ""): Promise<string> => {
 };
 
 const getProjectDirectory = async (): Promise<string> => {
-  return "."
+  return ".";
 };
 
 export default {

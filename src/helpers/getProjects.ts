@@ -44,7 +44,7 @@ export default async function getProjects() {
     if (folders.length >= 3) {
       if (item.includes("optimize")) {
         projectsWithSubfolders.push(folders[1]);
-        return folders.slice(0, 2).join("/")
+        return folders.slice(0, 2).join("/");
       } else {
         projectsWithSubfolders.push(folders[1]);
       }

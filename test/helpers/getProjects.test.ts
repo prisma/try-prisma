@@ -124,7 +124,7 @@ describe("Get Projects", () => {
       }),
     });
     const data = await getProjects();
-    console.log(data[0])
+    console.log(data[0]);
     expect(data[0].length).toBe(2);
     expect(data[0]).toContain("orm");
     expect(data[0]).toContain("accelerate");

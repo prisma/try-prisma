@@ -4,6 +4,7 @@
 
 [![Tests](https://github.com/prisma/try-prisma/actions/workflows/test.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/test.yml)
 [![Linting](https://github.com/prisma/try-prisma/actions/workflows/lint.yml/badge.svg)](https://github.com/prisma/try-prisma/actions/workflows/lint.yml)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 </div>
 

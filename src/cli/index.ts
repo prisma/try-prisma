@@ -19,8 +19,8 @@ export default class Cli {
     // Grab projects
     const result = await getProjects();
 
-    this.projects = result?.[0] ?? []
-    this.projectsWithSubfolders = result?.[1] ?? []
+    this.projects = result?.[0] ?? [];
+    this.projectsWithSubfolders = result?.[1] ?? [];
 
     // Parse CLI arguments
     const cliArgs = Command.parameters(parameters).parse();
@@ -65,21 +65,25 @@ export default class Cli {
   }
 
   async getProductFolder(): Promise<void> {
-    if (this.args.folder.length) return
-    const starter = await prompts.selectStarterOrExample()
+    if (this.args.folder.length) return;
+    const starter = await prompts.selectStarterOrExample();
     if (starter === "starter") {
-      this.args.folder = PRISMA_STARTER_TEMPLATE.split("/")[0]
-      this.args.template = PRISMA_STARTER_TEMPLATE
-      return
+      this.args.folder = PRISMA_STARTER_TEMPLATE.split("/")[0];
+      this.args.template = PRISMA_STARTER_TEMPLATE;
+      return;
     } else {
-      const projects = await prompts.selectORMorPDP()
+      const projects = await prompts.selectORMorPDP();
       if (projects !== "orm") {
-        this.args.folder = projects
+        this.args.folder = projects;
       } else {
         // hack from #DA-1540
-        this.args.folder = 'typescript'
-        if (this.projects.filter((project) => project.startsWith(this.args.folder)).length === 0) {
-          this.args.folder = 'orm'
+        this.args.folder = "typescript";
+        if (
+          this.projects.filter((project) =>
+            project.startsWith(this.args.folder),
+          ).length === 0
+        ) {
+          this.args.folder = "orm";
         }
       }
     }
@@ -93,7 +97,7 @@ export default class Cli {
     spinner.succeed(`Loaded ${this.projects.length} templates`);
 
     // Collect user input
-    await this.getProductFolder()
+    await this.getProductFolder();
 
     // filter projects based on folder
     this.projects = this.projects.filter((project) =>
@@ -114,9 +118,10 @@ export default class Cli {
     }
 
     if (!this.args.name.length) {
-      const defaultName = this.args.template === PRISMA_STARTER_TEMPLATE
-        ? "hello-prisma"
-        : this.args.template?.replace("/", "_");
+      const defaultName =
+        this.args.template === PRISMA_STARTER_TEMPLATE
+          ? "hello-prisma"
+          : this.args.template?.replace("/", "_");
       this.args.name = await prompts.getProjectName(defaultName);
     }
 

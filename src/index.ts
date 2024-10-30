@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import fs from "node:fs"
+import fs from "node:fs";
 
 import CLI from "./cli";
 import download from "./helpers/download";
@@ -7,7 +7,6 @@ import installPackages from "./helpers/installPackages";
 import logger from "./helpers/logger";
 import vscodeExtensionSuggestion from "./helpers/vscodeExtensionSuggestion";
 import chalk from "chalk";
-
 
 const main = async () => {
   const cli = new CLI();
@@ -39,10 +38,7 @@ const main = async () => {
       }
 
       if (cli.args.template.includes("optimize/starter")) {
-        await installPackages(
-          input.pkgMgr,
-          `${input.path}/${input.name}`,
-        );
+        await installPackages(input.pkgMgr, `${input.path}/${input.name}`);
       }
 
       if (
@@ -62,13 +58,24 @@ const main = async () => {
   }
 
   if (input.databaseUrl) {
-    fs.writeFileSync(`${input.path}/${input.name}/.env`, `DATABASE_URL="${input.databaseUrl}"\n`, { flag: "a" })
-    
-    if (input.databaseUrl.startsWith("prisma://") || input.databaseUrl.startsWith("prisma+postgres://")) {
-      const queryParams = input.databaseUrl.split("?")[1]
-      const urlParams = new URLSearchParams(queryParams)
-      const apiKey = urlParams.get("api_key")
-      fs.writeFileSync(`${input.path}/${input.name}/.env`, `PULSE_API_KEY="${apiKey}"\n`, { flag: "a" })
+    fs.writeFileSync(
+      `${input.path}/${input.name}/.env`,
+      `DATABASE_URL="${input.databaseUrl}"\n`,
+      { flag: "a" },
+    );
+
+    if (
+      input.databaseUrl.startsWith("prisma://") ||
+      input.databaseUrl.startsWith("prisma+postgres://")
+    ) {
+      const queryParams = input.databaseUrl.split("?")[1];
+      const urlParams = new URLSearchParams(queryParams);
+      const apiKey = urlParams.get("api_key");
+      fs.writeFileSync(
+        `${input.path}/${input.name}/.env`,
+        `PULSE_API_KEY="${apiKey}"\n`,
+        { flag: "a" },
+      );
     }
   }
 
@@ -96,8 +103,15 @@ const main = async () => {
   logger.success(`
     ${chalk.bold(`The project is good to go! Next steps:`)}
     ${chalk.bold(`1. Navigate into ${input.path}/${input.name} to begin.`)}
-    ${chalk.bold("2. Refer to the project README for detailed instructions on running the project:")}
-    ${"   "+chalk.bold.underline.blue(`https://github.com/prisma/prisma-examples/tree/latest/${input.template}`)}
+    ${chalk.bold(
+      "2. Refer to the project README for detailed instructions on running the project:",
+    )}
+    ${
+      "   " +
+      chalk.bold.underline.blue(
+        `https://github.com/prisma/prisma-examples/tree/latest/${input.template}`,
+      )
+    }
     `);
 
   logger.success(
