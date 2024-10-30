@@ -1,20 +1,35 @@
+# Pulled from https://github.com/semantic-release/semantic-release/blob/master/docs/recipes/ci-configurations/github-actions.md#githubworkflowsreleaseyml-configuration-for-node-projects
+name: Release
 on:
   push:
     branches:
-      - "main"
+      - main
 
-name: "Publish"
+permissions:
+  contents: read # for checkout
+
 jobs:
-  publish:
+  release:
+    name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
         with:
-          node-version: 16.x
-      - run: npm ci
-      - run: npm test
-      - run: npm run build
-      - uses: JS-DevTools/npm-publish@v1
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
         with:
-          token: ${{ secrets.NPM_AUTH_TOKEN }}
+          node-version: "lts/*"
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release -d
