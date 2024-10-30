@@ -20,5 +20,8 @@ export default {
     .default(false)
     .describe("Should this invocation be recorded with Prisma's analytics?"),
   "v vscode": z.boolean().default(false).describe("Are you using VSCode?"),
-  "d database-url": z.string().default("").describe("Provide a database URL to the template if desired."),
+  "d database-url": z
+    .string()
+    .default("")
+    .describe("Provide a database URL to the template if desired."),
 };
