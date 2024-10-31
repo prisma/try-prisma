@@ -1,11 +1,10 @@
 import chalk from "chalk";
-import dedent from "dedent";
 
 export default {
   error: (message: string) => {
-    console.log(chalk.redBright(dedent(message)));
+    console.log(chalk.redBright(message));
   },
   success: (message: string) => {
-    console.log(dedent(message));
+    console.log(message);
   },
 };
