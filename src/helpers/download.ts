@@ -14,8 +14,13 @@ export default async function download(options: CliInput): Promise<void> {
     );
   }
 
+  const templateName =
+    options.template === "databases/prisma-postgres"
+      ? "Prisma Starter"
+      : options.template;
+
   const spinner = ora();
-  spinner.start(`Downloading and extracting the ${options.template} project`);
+  spinner.start(`Downloading and extracting the ${templateName} project`);
 
   try {
     // Download the repo via the interceptor

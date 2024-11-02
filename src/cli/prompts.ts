@@ -17,6 +17,8 @@ const selectStarterOrExample = async (): Promise<string> => {
       {
         name: "Explore other examples",
         value: "example",
+        description:
+          "Our curated list of examples from the prisma/prisma-examples GitHub repository, showing how to use Prisma ORM with various other tools and frameworks.",
       },
     ],
   });
