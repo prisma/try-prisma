@@ -24,8 +24,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-      - name: Install dependencies
-        run: npm clean-install
+      - run: npm clean-install
+      - run: npm test
+      - run: npm run build
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
       - name: Release
