@@ -1,25 +1,16 @@
 import getProjects from "../../src/helpers/getProjects";
-import * as fetch from "node-fetch";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 describe("Get Projects", () => {
-  beforeEach(() => {
-    vi.mock("node-fetch", () => ({ default: vi.fn() }));
-  });
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   it("Should throw an error if the GET request fails for project data", () => {
-    vi.spyOn(fetch as any, "default").mockResolvedValue({
-      status: 404,
-      json: () => null,
-    });
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 404 }));
     expect(async () => await getProjects()).rejects.toThrow();
   });
 
   it('Should ignore directories that start with "."', async () => {
-    vi.spyOn(fetch as any, "default").mockResolvedValue({
+    global.fetch = vi.fn().mockResolvedValue({
       status: 200,
       json: () => ({
         tree: [
@@ -35,7 +26,7 @@ describe("Get Projects", () => {
     expect(data[0]).toStrictEqual([]);
   });
   it("Should ignore directories that do not have a package.json", async () => {
-    vi.spyOn(fetch as any, "default").mockResolvedValue({
+    global.fetch = vi.fn().mockResolvedValue({
       status: 200,
       json: () => ({
         tree: [
@@ -56,7 +47,7 @@ describe("Get Projects", () => {
   });
 
   it("Should return an array with a file path to a valid project", async () => {
-    vi.spyOn(fetch as any, "default").mockResolvedValue({
+    global.fetch = vi.fn().mockResolvedValue({
       status: 200,
       json: () => ({
         tree: [
@@ -78,7 +69,7 @@ describe("Get Projects", () => {
   });
 
   it('Should work as expected with a "tree" type', async () => {
-    vi.spyOn(fetch as any, "default").mockResolvedValue({
+    global.fetch = vi.fn().mockResolvedValue({
       status: 200,
       json: () => ({
         tree: [
@@ -100,7 +91,7 @@ describe("Get Projects", () => {
   });
 
   it("Should return multiple valid projects", async () => {
-    vi.spyOn(fetch as any, "default").mockResolvedValue({
+    global.fetch = vi.fn().mockResolvedValue({
       status: 200,
       json: () => ({
         tree: [
@@ -131,7 +122,7 @@ describe("Get Projects", () => {
   });
 
   it("Should return valid projects and filter bad projects", async () => {
-    vi.spyOn(fetch as any, "default").mockResolvedValue({
+    global.fetch = vi.fn().mockResolvedValue({
       status: 200,
       json: () => ({
         tree: [

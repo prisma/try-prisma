@@ -106,7 +106,7 @@ export default class Cli {
 
     // select template from list of projects
     if (!this.args.template.length) {
-      this.args.template = await prompts.getTemplate(this.projects);
+      this.args.template = (await prompts.getTemplate(this.projects)) as string;
     }
 
     if (!this.args.install) {
@@ -126,7 +126,7 @@ export default class Cli {
     }
 
     if (!this.args.path.length) {
-      this.args.path = await prompts.getProjectDirectory();
+      this.args.path = ".";
     }
 
     return this.args;

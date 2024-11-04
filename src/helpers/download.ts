@@ -1,14 +1,11 @@
 import { EXAMPLES_REPO_TAR, EXAMPLES_REPO_INTERCEPTOR } from "../constants";
 import { CliInput } from "../types";
 import gunzip from "gunzip-maybe";
-import fetch from "node-fetch";
 import ora from "ora";
 import path from "path";
-import stream from "stream";
+import { Readable } from "node:stream";
+import { pipeline } from "node:stream/promises";
 import tar from "tar-fs";
-import { promisify } from "util";
-
-const pipeline = promisify(stream.pipeline);
 
 export default async function download(options: CliInput): Promise<void> {
   if (!options.template.length) {
@@ -17,69 +14,69 @@ export default async function download(options: CliInput): Promise<void> {
     );
   }
 
+  const templateName =
+    options.template === "databases/prisma-postgres"
+      ? "Prisma Starter"
+      : options.template;
+
   const spinner = ora();
-  spinner.start(`Downloading and extracting the ${options.template} project`);
-
-  // Download the repo via the interceptor
-  let response = await fetch(EXAMPLES_REPO_INTERCEPTOR, {
-    method: "POST",
-    body: JSON.stringify(options),
-  });
-
-  if (response.status !== 200) {
-    // Something went wrong with the interceptor,
-    // try fetching from GitHub directly ...
-    response = await fetch(EXAMPLES_REPO_TAR, {
-      method: "GET",
-    });
-
-    if (response.status !== 200) {
-      spinner.stopAndPersist();
-      throw new Error(
-        `Something went wrong when fetching prisma/prisma-examples. Received a status code ${response.status}.`,
-      );
-    }
-  }
+  spinner.start(`Downloading and extracting the ${templateName} project`);
 
   try {
+    // Download the repo via the interceptor
+    let response = await fetch(EXAMPLES_REPO_INTERCEPTOR, {
+      method: "POST",
+      body: JSON.stringify(options),
+    });
+
+    if (!response.ok) {
+      // fallback to GitHub direct download
+      response = await fetch(EXAMPLES_REPO_TAR, {
+        method: "GET",
+      });
+    }
+
+    if (!response.ok || !response.body) {
+      throw new Error(
+        `Failed to fetch prisma/prisma-examples. Status: ${response.status}`,
+      );
+    }
+
     await pipeline(
-      // Unzip it
-      response.body?.pipe(gunzip()),
-      // Extract the stuff into this directory
+      Readable.from(response.body),
+      gunzip(),
       tar.extract(`${options.path}/${options.name}`, {
         map(header) {
           const originalDirName = header.name.split("/")[0];
           header.name = header.name.replace(`${originalDirName}/`, "");
-          options.template = options.template
+
+          const normalizedTemplate = options.template
             .split(path.sep)
             .join(path.posix.sep);
-          if (options.template) {
-            if (header.name.startsWith(`${options.template}/`)) {
-              header.name = header.name.replace(options.template, "");
-            } else {
-              header.name = "[[ignore-me]]";
-            }
+
+          if (header.name.startsWith(`${normalizedTemplate}/`)) {
+            header.name = header.name.replace(normalizedTemplate, "");
+          } else {
+            header.name = "[[ignore-me]]";
           }
+
           return header;
         },
         ignore(_filename, header) {
           if (!header) {
             throw new Error(`Header is undefined`);
           }
-
           return header.name === "[[ignore-me]]";
         },
-        readable: true,
-        writable: true,
       }),
     );
-    spinner.succeed(
-      `Downloaded and extracted the ${options.template} project in ${options.path}/${options.name}.\n`,
-    );
-  } catch (e) {
-    spinner.stopAndPersist();
+  } catch (error) {
+    spinner.fail();
     throw new Error(
-      `Something went wrong when extracting the files from the repository tar file.`,
+      `Failed to download or extract files: ${(error as Error).message}`,
     );
   }
+  spinner.succeed(
+    `Downloaded and extracted the ${options.template} project in ${options.path}/${options.name}.\n`,
+  );
 }
