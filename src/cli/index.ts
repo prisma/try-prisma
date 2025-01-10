@@ -121,7 +121,8 @@ export default class Cli {
       const defaultName =
         this.args.template === PRISMA_STARTER_TEMPLATE
           ? "hello-prisma"
-          : this.args.template?.replace("/", "_");
+          : this.args.template?.replace("/", "_").split("_").slice(1).join("_");
+
       this.args.name = await prompts.getProjectName(defaultName);
     }
 
