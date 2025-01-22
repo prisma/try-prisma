@@ -28,11 +28,11 @@ export default class Cli {
     cliArgs.name = cliArgs.name ? cliArgs.name.replace("/", "_").trim() : "";
     const folder = cliArgs.template ? cliArgs.template.split("/")[0] : "";
     this.args = { ...cliArgs, path: ".", folder, install: false, pkgMgr: "" };
-    this.extractManualIntallInstructions(cliArgs.install);
+    this.extractManualInstallInstructions(cliArgs.install);
     this.validateUserInput();
   }
 
-  extractManualIntallInstructions(install: boolean | "npm" | "yarn" | "pnpm") {
+  extractManualInstallInstructions(install: boolean | "npm" | "yarn" | "pnpm") {
     if (typeof install !== "string") {
       this.args.install = install;
       this.args.pkgMgr = "";
