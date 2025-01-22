@@ -113,7 +113,7 @@ export default class Cli {
       this.args.install = await prompts.getInstallSelection();
     }
 
-    if (!this.args.pkgMgr.length && this.args.install) {
+    if (this.args.install && !this.args.pkgMgr) {
       this.args.pkgMgr = await prompts.selectManager();
     }
 
