@@ -35,7 +35,7 @@ export default class Cli {
   extractManualIntallInstructions(install: boolean | "npm" | "yarn" | "pnpm") {
     if (typeof install !== "string") {
       this.args.install = install;
-      this.args.pkgMgr = "npm"; // default package manager is npm
+      this.args.pkgMgr = "";
     } else {
       this.args.pkgMgr = install;
       this.args.install = true;
