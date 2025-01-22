@@ -52,6 +52,8 @@ In this scenario, you will still be prompted to input values for your preferred 
 
 ### Selecting a package manager
 
+If no package manager is specified, the default package manager will be `npm`.
+
 If you wanted to use [`yarn`](https://yarnpkg.com/) to install the packages automatically:
 
 ```sh
