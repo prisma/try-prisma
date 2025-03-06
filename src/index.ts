@@ -26,25 +26,11 @@ const main = async () => {
     if (!isProjectWithSubdirectory) {
       await installPackages(input.pkgMgr, `${input.path}/${input.name}`);
     } else {
-      if (cli.args.template.includes("fullstack-simple-chat")) {
-        await installPackages(
-          input.pkgMgr,
-          `${input.path}/${input.name}/client`,
-        );
-        await installPackages(
-          input.pkgMgr,
-          `${input.path}/${input.name}/server`,
-        );
-      }
-
       if (cli.args.template.includes("optimize/starter")) {
         await installPackages(input.pkgMgr, `${input.path}/${input.name}`);
       }
 
-      if (
-        cli.args.template.includes("product-search-with-typesense") ||
-        cli.args.template.includes("rest-nextjs-express")
-      ) {
+      if (cli.args.template.includes("rest-nextjs-express")) {
         await installPackages(
           input.pkgMgr,
           `${input.path}/${input.name}/frontend`,
@@ -63,20 +49,6 @@ const main = async () => {
       `DATABASE_URL="${input.databaseUrl}"\n`,
       { flag: "a" },
     );
-
-    if (
-      input.databaseUrl.startsWith("prisma://") ||
-      input.databaseUrl.startsWith("prisma+postgres://")
-    ) {
-      const queryParams = input.databaseUrl.split("?")[1];
-      const urlParams = new URLSearchParams(queryParams);
-      const apiKey = urlParams.get("api_key");
-      fs.writeFileSync(
-        `${input.path}/${input.name}/.env`,
-        `PULSE_API_KEY="${apiKey}"\n`,
-        { flag: "a" },
-      );
-    }
   }
 
   if (input.vscode) {
