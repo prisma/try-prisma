@@ -7,9 +7,4 @@ export const EXAMPLES_REPO_TAR =
 export const EXAMPLES_REPO_INTERCEPTOR =
   "https://www.try-prisma-analytics.com/api/interceptor";
 
-export const EXAMPLES_DIR_ACCEPT = [
-  "typescript",
-  "databases",
-  "orm",
-  "accelerate",
-];
+export const EXAMPLES_DIR_ACCEPT = ["typescript", "databases", "orm"];
