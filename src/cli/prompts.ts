@@ -55,11 +55,6 @@ const selectORMorPDP = async () => {
         value: "accelerate",
         description: "Perform caching and connection pooling",
       },
-      {
-        name: `Prisma Optimize`,
-        value: "optimize",
-        description: "Analyze and improve query performance",
-      },
     ],
   });
 };

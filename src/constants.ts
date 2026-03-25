@@ -12,5 +12,4 @@ export const EXAMPLES_DIR_ACCEPT = [
   "databases",
   "orm",
   "accelerate",
-  "optimize",
 ];

@@ -26,10 +26,6 @@ const main = async () => {
     if (!isProjectWithSubdirectory) {
       await installPackages(input.pkgMgr, `${input.path}/${input.name}`);
     } else {
-      if (cli.args.template.includes("optimize/starter")) {
-        await installPackages(input.pkgMgr, `${input.path}/${input.name}`);
-      }
-
       if (cli.args.template.includes("rest-nextjs-express")) {
         await installPackages(
           input.pkgMgr,
