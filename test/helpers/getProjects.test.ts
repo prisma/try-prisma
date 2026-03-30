@@ -96,19 +96,19 @@ describe("Get Projects", () => {
       json: () => ({
         tree: [
           {
-            path: "accelerate",
-            type: "tree",
-          },
-          {
-            path: "accelerate/package.json",
-            type: "blob",
-          },
-          {
             path: "orm",
             type: "tree",
           },
           {
             path: "orm/package.json",
+            type: "blob",
+          },
+          {
+            path: "databases",
+            type: "tree",
+          },
+          {
+            path: "databases/package.json",
             type: "blob",
           },
         ],
@@ -118,7 +118,7 @@ describe("Get Projects", () => {
     console.log(data[0]);
     expect(data[0].length).toBe(2);
     expect(data[0]).toContain("orm");
-    expect(data[0]).toContain("accelerate");
+    expect(data[0]).toContain("databases");
   });
 
   it("Should return valid projects and filter bad projects", async () => {

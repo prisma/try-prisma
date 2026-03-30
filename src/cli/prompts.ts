@@ -12,7 +12,7 @@ const selectStarterOrExample = async (): Promise<string> => {
         name: `Prisma Starter (Recommended)`,
         value: "starter",
         description:
-          "The Prisma Starter is pre-configured with Prisma ORM, Accelerate, and a Prisma Postgres database.",
+          "The Prisma Starter is pre-configured with Prisma ORM and a Prisma Postgres database.",
       },
       {
         name: "Explore other examples",
@@ -49,16 +49,6 @@ const selectORMorPDP = async () => {
         name: `Prisma ORM`,
         value: "orm",
         description: "Define Prisma schema and run queries",
-      },
-      {
-        name: `Prisma Accelerate`,
-        value: "accelerate",
-        description: "Perform caching and connection pooling",
-      },
-      {
-        name: `Prisma Optimize`,
-        value: "optimize",
-        description: "Analyze and improve query performance",
       },
     ],
   });

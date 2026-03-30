@@ -41,12 +41,7 @@ export default async function getProjects() {
   const paths = Object.keys(mergedData).map((item) => {
     const folders = item.split("/");
     if (folders.length >= 3) {
-      if (item.includes("optimize")) {
-        projectsWithSubfolders.push(folders[1]);
-        return folders.slice(0, 2).join("/");
-      } else {
-        projectsWithSubfolders.push(folders[1]);
-      }
+      projectsWithSubfolders.push(folders[1]);
     }
 
     return folders.length >= 3 ? folders.slice(0, -1).join("/") : item;
